@@ -1,0 +1,52 @@
+[
+  {
+    "category": "Welcome Drinks",
+    "note": "Cool drinks for guest arrival",
+    "items": ["Panakam", "Buttermilk", "Lemon Juice", "Rose Milk", "Mango Juice", "Badam Milk"]
+  },
+  {
+    "category": "Starters",
+    "note": "Hot veg and non-veg starters",
+    "items": ["Mirchi Bajji", "Punugulu", "Veg Manchuria", "Baby Corn Fry", "Chicken 65", "Chilli Chicken", "Fish Fry", "Mutton Fry"]
+  },
+  {
+    "category": "Rice Items",
+    "note": "Main rice dishes for Andhra meals",
+    "items": ["White Rice", "Bagara Rice", "Veg Pulao", "Biryani", "Gongura Chicken Rice", "Tomato Rice", "Tamarind Rice", "Jeera Rice"]
+  },
+  {
+    "category": "Curries",
+    "note": "Veg and non-veg curries",
+    "items": ["Gutti Vankaya Curry", "Bendakaya Fry", "Potato Fry", "Beerakaya Curry", "Mixed Veg Curry", "Paneer Butter Masala", "Chicken Curry", "Mutton Curry", "Fish Pulusu"]
+  },
+  {
+    "category": "Dal & Sambar",
+    "note": "Daily comfort gravies",
+    "items": ["Pappu", "Tomato Pappu", "Spinach Dal", "Sambar", "Rasam"]
+  },
+  {
+    "category": "Pickles & Chutneys",
+    "note": "Andhra pachadi and chutney sides",
+    "items": ["Avakaya Pickle", "Gongura Pickle", "Tomato Pachadi", "Peanut Chutney", "Coconut Chutney", "Ginger Chutney"]
+  },
+  {
+    "category": "Rotis",
+    "note": "Soft breads and millet rotis",
+    "items": ["Chapati", "Butter Naan", "Poori", "Jowar Roti", "Bajra Roti"]
+  },
+  {
+    "category": "Fry Items",
+    "note": "Crispy and spicy fry dishes",
+    "items": ["Chicken Fry", "Apollo Fish", "Crispy Corn", "Mushroom Fry", "Egg Masala"]
+  },
+  {
+    "category": "Sweets",
+    "note": "Function sweets and desserts",
+    "items": ["Double Ka Meetha", "Gulab Jamun", "Poornalu", "Ariselu", "Bobbatlu", "Payasam", "Rasmalai", "Ice Cream"]
+  },
+  {
+    "category": "Traditional Village Special Items",
+    "note": "Kurnool-style country specials",
+    "items": ["Ragi Sangati", "Naatu Kodi Pulusu", "Ulavacharu", "Fresh Curd", "Clay Pot Cooking", "Wood Fire Chicken", "Country Style Mutton Curry"]
+  }
+]

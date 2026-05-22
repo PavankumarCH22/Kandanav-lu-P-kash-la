@@ -1,0 +1,20 @@
+{
+  "name": "kandanavolu-vata",
+  "version": "1.0.0",
+  "description": "South Indian village-style catering website with a small Node backend.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "catering",
+    "south-indian",
+    "frontend",
+    "backend"
+  ],
+  "author": "",
+  "license": "MIT"
+}

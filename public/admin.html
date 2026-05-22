@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kandanavōlu Vata Admin Bookings</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section class="admin-login-card" id="adminLogin">
+        <span class="section-kicker">Secure Admin</span>
+        <h1>Kandanavōlu Vata Admin Login</h1>
+        <p>Enter the admin password to view bookings and download the inquiry sheet.</p>
+        <form class="admin-login-form" id="adminLoginForm">
+          <label>
+            Admin Password
+            <input name="password" type="password" placeholder="Enter password" required>
+          </label>
+          <button class="button primary" type="submit">Login</button>
+        </form>
+        <p class="form-status" id="loginStatus" role="status"></p>
+      </section>
+
+      <div class="admin-dashboard" id="adminDashboard" hidden>
+        <section class="admin-head">
+          <div>
+            <span class="section-kicker">Admin Bookings</span>
+            <h1>Kandanavōlu Vata booking data</h1>
+            <p>View all online booking inquiries and export them as a sheet.</p>
+          </div>
+          <div class="admin-actions">
+            <a class="button secondary" href="/">Website</a>
+            <button class="button primary" id="downloadSheet" type="button">Download Sheet</button>
+            <button class="button secondary" id="adminLogout" type="button">Logout</button>
+          </div>
+        </section>
+
+        <section class="admin-card">
+          <div class="admin-summary">
+            <span id="bookingCount">0 bookings</span>
+            <span id="deviceUrl">Local device URL loading...</span>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Function</th>
+                  <th>Food</th>
+                  <th>Veg / Non-veg</th>
+                  <th>Guests</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody id="bookingRows"></tbody>
+            </table>
+          </div>
+          <p class="form-status" id="adminStatus" role="status"></p>
+        </section>
+      </div>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
