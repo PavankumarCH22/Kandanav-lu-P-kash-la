@@ -2931,3 +2931,321 @@ textarea:focus {
     width: calc(100% - 24px);
   }
 }
+
+/* Compact professional scale */
+.site-header {
+  top: 12px;
+  padding: 9px 12px;
+  gap: 16px;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  font-size: 0.86rem;
+}
+
+.brand strong {
+  font-size: 0.94rem;
+}
+
+.brand small,
+.nav-links,
+.language-switcher button {
+  font-size: 0.76rem;
+}
+
+.hero {
+  min-height: 82vh;
+}
+
+.hero-shell {
+  width: min(1080px, calc(100% - 32px));
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+  gap: clamp(18px, 3vw, 36px);
+  margin-bottom: 8vh;
+}
+
+.hero-badge {
+  margin-bottom: 14px;
+  padding: 8px 10px;
+}
+
+.hero-badge strong {
+  min-width: 46px;
+  min-height: 38px;
+}
+
+.hero h1 {
+  max-width: 720px;
+  font-size: clamp(2.25rem, 5.2vw, 4.45rem);
+  line-height: 1.12;
+}
+
+.hero-copy {
+  max-width: 600px;
+  margin-top: 16px;
+  font-size: clamp(0.96rem, 1.35vw, 1.1rem);
+  line-height: 1.62;
+}
+
+.hero-actions {
+  margin-top: 22px;
+}
+
+.button {
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 0.9rem;
+}
+
+.visitor-card {
+  padding: 18px;
+}
+
+.visitor-card h2 {
+  font-size: 1.42rem;
+}
+
+.visitor-card p,
+.premium-service-grid p,
+.poster-lead,
+.about-grid p,
+.why-copy p,
+.booking-copy p,
+.contact-details-panel p {
+  font-size: 0.98rem;
+}
+
+.trust-strip strong {
+  font-size: clamp(1.25rem, 2.2vw, 1.9rem);
+}
+
+.trust-strip div {
+  padding: 18px clamp(14px, 3vw, 34px);
+}
+
+.service-dock {
+  gap: 10px;
+  padding: 14px clamp(16px, 4vw, 52px);
+}
+
+.service-dock a {
+  min-height: 72px;
+  padding: 12px 14px;
+}
+
+.service-dock span {
+  width: 38px;
+  height: 38px;
+  font-size: 0.84rem;
+}
+
+.service-dock strong {
+  font-size: 0.98rem;
+}
+
+.premium-services,
+.why-section {
+  width: min(1080px, calc(100% - 32px));
+  margin-top: clamp(38px, 6vw, 72px);
+}
+
+.section,
+.package-section,
+.stories-section,
+.functions-section,
+.booking-section,
+.contact-section,
+.promo-poster,
+.event-route {
+  width: min(1080px, calc(100% - 32px));
+}
+
+.premium-services h2,
+.why-section h2,
+.poster-main h2,
+.section h2,
+.functions-head h2,
+.booking-copy h2,
+.contact-details-panel h2,
+.stories-section h2 {
+  font-size: clamp(1.7rem, 3.1vw, 3rem);
+  line-height: 1.18;
+}
+
+.premium-service-grid {
+  gap: 14px;
+}
+
+.premium-service-grid div,
+.why-grid article,
+.about-card,
+.food-card,
+.package-card,
+.testimonial-card {
+  padding: 16px;
+}
+
+.premium-service-grid img {
+  aspect-ratio: 1.35;
+}
+
+.premium-service-grid span {
+  width: 36px;
+  height: 36px;
+  font-size: 0.82rem;
+}
+
+.premium-service-grid h3,
+.poster-menu h3,
+.food-card h3,
+.package-card h3 {
+  font-size: 1.16rem;
+}
+
+.promo-poster,
+.functions-section,
+.booking-section,
+.contact-section {
+  padding: clamp(32px, 5vw, 58px) clamp(16px, 4vw, 46px) !important;
+}
+
+.poster-menu {
+  gap: 12px;
+}
+
+.poster-specialties {
+  gap: 8px;
+}
+
+.poster-specialties span,
+.serving-style-grid span,
+.contact-row span {
+  font-size: 0.84rem;
+}
+
+.why-section {
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.why-grid article {
+  min-height: 118px;
+}
+
+.event-route {
+  gap: 12px;
+  padding-top: clamp(36px, 5vw, 62px);
+}
+
+.route-card {
+  min-height: 150px;
+  padding: 18px;
+}
+
+.functions-grid {
+  gap: 10px;
+}
+
+.functions-grid span {
+  min-height: 56px;
+  padding: 12px;
+}
+
+.menu-grid,
+.package-grid,
+.testimonial-grid,
+.business-grid {
+  gap: 14px;
+}
+
+.menu-toggle,
+input,
+select,
+textarea {
+  min-height: 42px;
+  font-size: 0.94rem;
+}
+
+.booking-form {
+  gap: 12px;
+  padding: 18px;
+}
+
+.helpline-card {
+  padding: 18px;
+}
+
+.helpline-num {
+  font-size: 1.22rem;
+}
+
+.quick-actions a {
+  min-height: 38px;
+  padding: 9px 12px;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 980px) {
+  .hero {
+    min-height: auto;
+    padding-top: 120px;
+  }
+
+  .hero-shell {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    margin-bottom: 44px;
+  }
+
+  .visitor-card {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    top: 10px;
+    padding: 10px;
+  }
+
+  .hero {
+    padding-top: 150px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 10.5vw, 3rem);
+  }
+
+  .hero-copy {
+    font-size: 0.96rem;
+  }
+
+  .trust-strip,
+  .service-dock {
+    grid-template-columns: 1fr;
+  }
+
+  .premium-services,
+  .why-section,
+  .section,
+  .package-section,
+  .stories-section,
+  .functions-section,
+  .booking-section,
+  .contact-section,
+  .promo-poster,
+  .event-route {
+    width: calc(100% - 24px);
+  }
+
+  .premium-service-grid,
+  .poster-menu,
+  .about-grid,
+  .menu-grid,
+  .package-grid,
+  .testimonial-grid,
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+}
