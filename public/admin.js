@@ -9,7 +9,7 @@ const deviceUrl = document.querySelector("#deviceUrl");
 const downloadSheet = document.querySelector("#downloadSheet");
 const adminLogout = document.querySelector("#adminLogout");
 
-const TOKEN_KEY = "kv-admin-token";
+const TOKEN_KEY = "kp-admin-token";
 
 function token() {
   return sessionStorage.getItem(TOKEN_KEY) || "";
@@ -135,3 +135,5 @@ if (token()) {
 } else {
   showLogin();
 }
+
+

@@ -1,4 +1,4 @@
-# Publish Kandanavolu Vata Website
+# Publish Kandanavolu Paakashala Website
 
 This project is ready to publish as one Node.js web service.
 
@@ -19,7 +19,7 @@ This project is ready to publish as one Node.js web service.
 After deploy, Render gives a public URL like:
 
 ```text
-https://kandanavolu-vata.onrender.com
+https://kandanavolu-paakashala.onrender.com
 ```
 
 Share that URL with customers. The admin page will be:

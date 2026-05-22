@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: kandanavolu-vata
+    name: kandanavolu-paakashala
     runtime: node
     plan: free
     buildCommand: npm install

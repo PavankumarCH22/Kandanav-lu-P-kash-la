@@ -9,10 +9,17 @@ const bookingForm = document.querySelector("#bookingForm");
 const formStatus = document.querySelector("#formStatus");
 const languageButtons = document.querySelectorAll("[data-lang]");
 
-let currentLanguage = localStorage.getItem("kv-language") || "en";
+// Selection options
+const selectedItemsBox = document.querySelector("#selectedItemsBox");
+const selectedItemsContainer = document.querySelector("#selectedItemsContainer");
+const clearSelectedBtn = document.querySelector("#clearSelectedBtn");
+const messageInput = document.querySelector("#messageInput");
+
+let currentLanguage = localStorage.getItem("kp-language") || "en";
 let cachedFunctions = [];
 let cachedMenu = [];
 let cachedPackages = [];
+const selectedItems = new Set();
 
 const translations = {
   en: {
@@ -27,7 +34,7 @@ const translations = {
     "tagline": "Traditional Taste... Quality Service",
     "tagline.dot": "Traditional Taste. Quality Service.",
     "hero.badge": "Kurnool food service",
-    "hero.eyebrow": "Kandanavōlu Vata catering services",
+    "hero.eyebrow": "Kandanavōlu Pākashāla catering services",
     "hero.title": "Traditional taste for every Kurnool celebration.",
     "hero.copy": "Welcome drinks, starters, Andhra meals, curries, sweets, ragi sangati, naatu kodi pulusu, banana leaf serving, and live counters for all types of functions.",
     "hero.inquiry": "Send inquiry",
@@ -43,14 +50,14 @@ const translations = {
     "trust.area": "local service area",
     "trust.service": "orders and service",
     "dock.explore": "Explore Food",
-    "dock.exploreSmall": "67 Andhra function items",
+    "dock.exploreSmall": "90 Andhra function items",
     "dock.select": "Select Function",
     "dock.selectSmall": "Weddings to family gatherings",
     "dock.inquiry": "Send Inquiry",
     "dock.inquirySmall": "24/7 Kurnool callback",
     "business.kicker": "Business Catering",
     "business.title": "Professional food planning for every function size.",
-    "business.copy": "Kandanavōlu Vata helps customers choose food items, serving style, guest count, and event details with a clear booking process for fast follow-up.",
+    "business.copy": "Kandanavōlu Pākashāla helps customers choose food items, serving style, guest count, and event details with a clear booking process for fast follow-up.",
     "business.card1Title": "Quick Booking",
     "business.card1Copy": "Call, WhatsApp, or send the online inquiry form.",
     "business.card2Title": "Event Ready",
@@ -60,14 +67,14 @@ const translations = {
     "business.card4Title": "Booking Records",
     "business.card4Copy": "Admin can view inquiries and export booking sheet data.",
     "about.kicker": "About Us",
-    "about.title": "Kandanavōlu Vata brings village taste to modern functions.",
+    "about.title": "Kandanavōlu Pākashāla brings village taste to modern functions.",
     "about.copy1": "We provide professional Andhra village-style catering in Kurnool for weddings, engagements, housewarming functions, temple events, corporate events, college functions, outdoor events, and family gatherings.",
     "about.copy2": "Our service focuses on fresh ingredients, hygienic cooking, banana leaf meals, live counters, veg and non-veg food options, and clear booking follow-up for every customer inquiry.",
     "about.business": "Business Name",
     "about.location": "Location",
     "about.contact": "Contact",
     "services.kicker": "Catering Services",
-    "services.title": "Kandanavōlu Vata for every function.",
+    "services.title": "Kandanavōlu Pākashāla for every function.",
     "services.copy": "A professional Kurnool catering service for weddings, engagements, family functions, temple events, college events, corporate gatherings, outdoor events, and village celebrations.",
     "services.foodTitle": "Function Food",
     "services.foodCopy": "Welcome drinks, starters, Andhra meals, rice items, curries, dal, sambar, rotis, fry items, and sweets.",
@@ -94,7 +101,7 @@ const translations = {
     "functions.copy": "Choose the same function type in the inquiry form, so the business gets clear event details immediately.",
     "menu.kicker": "Special Menu",
     "menu.title": "Andhra function food items",
-    "menu.count": "67 function items",
+    "menu.count": "90 function items",
     "packages.kicker": "Combination Meals",
     "packages.title": "Famous village combos",
     "reviews.kicker": "Local Reviews",
@@ -124,6 +131,8 @@ const translations = {
     "form.message": "Message",
     "form.messagePlaceholder": "Mention items like panakam, mirchi bajji, biryani, gutti vankaya, naatu kodi pulusu, bobbatlu, or live counters",
     "form.submit": "Send food inquiry",
+    "form.selectedTitle": "Selected Food Items",
+    "form.clearSelection": "Clear All",
     "foodNeed.welcome": "Welcome drinks",
     "foodNeed.starters": "Starters",
     "foodNeed.rice": "Rice items",
@@ -137,11 +146,18 @@ const translations = {
     "preference.both": "Both veg and non-veg",
     "contact.kicker": "Contact Page",
     "contact.title": "Call or WhatsApp for fast booking support.",
-    "contact.copy": "Kandanavōlu Vata, Kurnool, Andhra Pradesh. We support 24/7 catering inquiries for all functions.",
-    "contact.call": "Call 93810 12345",
-    "contact.whatsapp": "WhatsApp Booking",
-    "contact.admin": "Admin Bookings",
-    "quick.call": "Call",
+    "contact.copy": "Kandanavōlu Pākashāla, Kurnool, Andhra Pradesh. We support 24/7 catering inquiries for all functions.",
+    "contact.call1": "Call 63005 48790",
+    "contact.whatsapp1": "WhatsApp 63005 48790",
+    "contact.call2": "Call 90304 35532",
+    "contact.whatsapp2": "WhatsApp 90304 35532",
+    "contact.primary": "Primary Helpline",
+    "contact.secondary": "Secondary Helpline",
+    "contact.callNow": "Call Now",
+    "contact.chatNow": "WhatsApp",
+    "contact.admin": "Admin Dashboard",
+    "quick.call1": "Call 1",
+    "quick.call2": "Call 2",
     "quick.whatsapp": "WhatsApp",
     "footer.copy": "24/7 Kurnool village-style food service for functions, events, and live counters.",
     "status.loading": "Sending inquiry...",
@@ -164,7 +180,7 @@ const translations = {
     "tagline": "సాంప్రదాయ రుచి... నాణ్యమైన సేవ",
     "tagline.dot": "సాంప్రదాయ రుచి. నాణ్యమైన సేవ.",
     "hero.badge": "కర్నూలు ఫుడ్ సర్వీస్",
-    "hero.eyebrow": "కందనవోలు వట కేటరింగ్ సర్వీసెస్",
+    "hero.eyebrow": "కందనవోలు పాకశాల కేటరింగ్ సర్వీసెస్",
     "hero.title": "ప్రతి కర్నూలు వేడుకకు సాంప్రదాయ రుచి.",
     "hero.copy": "వెల్కమ్ డ్రింక్స్, స్టార్టర్స్, ఆంధ్ర భోజనం, కూరలు, స్వీట్స్, రాగి సంగటి, నాటు కోడి పులుసు, అరటి ఆకు వడ్డింపు, లైవ్ కౌంటర్లు అందిస్తాం.",
     "hero.inquiry": "ఇంక్వైరీ పంపండి",
@@ -180,14 +196,14 @@ const translations = {
     "trust.area": "లోకల్ సర్వీస్ ఏరియా",
     "trust.service": "ఆర్డర్లు మరియు సేవ",
     "dock.explore": "ఫుడ్ చూడండి",
-    "dock.exploreSmall": "67 ఆంధ్ర ఫంక్షన్ ఐటమ్స్",
+    "dock.exploreSmall": "90 ఆంధ్ర ఫంక్షన్ ఐటమ్స్",
     "dock.select": "ఫంక్షన్ ఎంచుకోండి",
     "dock.selectSmall": "పెళ్లిళ్ల నుంచి కుటుంబ వేడుకల వరకు",
     "dock.inquiry": "ఇంక్వైరీ పంపండి",
     "dock.inquirySmall": "24/7 కర్నూలు కాల్ బ్యాక్",
     "business.kicker": "బిజినెస్ కేటరింగ్",
     "business.title": "ప్రతి ఫంక్షన్ పరిమాణానికి ప్రొఫెషనల్ ఫుడ్ ప్లానింగ్.",
-    "business.copy": "కందనవోలు వట కస్టమర్లకు ఫుడ్ ఐటమ్స్, వడ్డింపు స్టైల్, అతిథుల సంఖ్య, ఈవెంట్ వివరాలు స్పష్టంగా ఎంచుకునే బుకింగ్ ప్రాసెస్ అందిస్తుంది.",
+    "business.copy": "కందనవోలు పాకశాల కస్టమర్లకు ఫుడ్ ఐటమ్స్, వడ్డింపు స్టైల్, అతిథుల సంఖ్య, ఈవెంట్ వివరాలు స్పష్టంగా ఎంచుకునే బుకింగ్ ప్రాసెస్ అందిస్తుంది.",
     "business.card1Title": "త్వరిత బుకింగ్",
     "business.card1Copy": "కాల్, వాట్సాప్ లేదా ఆన్‌లైన్ ఇంక్వైరీ ఫార్మ్ పంపండి.",
     "business.card2Title": "ఈవెంట్ రెడీ",
@@ -197,14 +213,14 @@ const translations = {
     "business.card4Title": "బుకింగ్ రికార్డ్స్",
     "business.card4Copy": "అడ్మిన్ ఇంక్వైరీలను చూడవచ్చు మరియు బుకింగ్ షీట్ డేటాను ఎక్స్‌పోర్ట్ చేయవచ్చు.",
     "about.kicker": "మా గురించి",
-    "about.title": "కందనవోలు వట గ్రామీణ రుచిని ఆధునిక ఫంక్షన్లకు తీసుకువస్తుంది.",
+    "about.title": "కందనవోలు పాకశాల గ్రామీణ రుచిని ఆధునిక ఫంక్షన్లకు తీసుకువస్తుంది.",
     "about.copy1": "కర్నూలులో పెళ్లిళ్లు, ఎంగేజ్‌మెంట్లు, గృహప్రవేశాలు, దేవాలయ ఈవెంట్లు, కార్పొరేట్ ఈవెంట్లు, కాలేజీ ఫంక్షన్లు, అవుట్‌డోర్ ఈవెంట్లు, కుటుంబ వేడుకలకు ప్రొఫెషనల్ ఆంధ్ర గ్రామీణ కేటరింగ్ అందిస్తాం.",
     "about.copy2": "తాజా పదార్థాలు, శుభ్రమైన వంట, అరటి ఆకు భోజనం, లైవ్ కౌంటర్లు, వెజ్ మరియు నాన్-వెజ్ ఎంపికలు, స్పష్టమైన బుకింగ్ ఫాలోఅప్ మా ప్రత్యేకత.",
     "about.business": "బిజినెస్ పేరు",
     "about.location": "లొకేషన్",
     "about.contact": "కాంటాక్ట్",
     "services.kicker": "కేటరింగ్ సర్వీసెస్",
-    "services.title": "ప్రతి ఫంక్షన్‌కు కందనవోలు వట.",
+    "services.title": "ప్రతి ఫంక్షన్‌కు కందనవోలు పాకశాల.",
     "services.copy": "పెళ్లిళ్లు, ఎంగేజ్‌మెంట్లు, కుటుంబ ఫంక్షన్లు, దేవాలయ, కాలేజీ, కార్పొరేట్, అవుట్‌డోర్, గ్రామీణ వేడుకలకు ప్రొఫెషనల్ కర్నూలు కేటరింగ్.",
     "services.foodTitle": "ఫంక్షన్ ఫుడ్",
     "services.foodCopy": "వెల్కమ్ డ్రింక్స్, స్టార్టర్స్, ఆంధ్ర భోజనం, రైస్ ఐటమ్స్, కూరలు, పప్పు, సాంబార్, రోటీలు, ఫ్రై ఐటమ్స్, స్వీట్స్.",
@@ -231,7 +247,7 @@ const translations = {
     "functions.copy": "ఇంక్వైరీ ఫార్మ్‌లో అదే ఫంక్షన్ రకం ఎంచుకుంటే బిజినెస్‌కు వివరాలు క్లియర్‌గా వస్తాయి.",
     "menu.kicker": "స్పెషల్ మెనూ",
     "menu.title": "ఆంధ్ర ఫంక్షన్ ఫుడ్ ఐటమ్స్",
-    "menu.count": "67 ఫంక్షన్ ఐటమ్స్",
+    "menu.count": "90 ఫంక్షన్ ఐటమ్స్",
     "packages.kicker": "కాంబినేషన్ భోజనాలు",
     "packages.title": "ప్రసిద్ధ గ్రామీణ కాంబోలు",
     "reviews.kicker": "లోకల్ రివ్యూస్",
@@ -261,6 +277,8 @@ const translations = {
     "form.message": "మెసేజ్",
     "form.messagePlaceholder": "పానకం, మిర్చి బజ్జీ, బిర్యానీ, గుత్తి వంకాయ, నాటు కోడి పులుసు, బొబ్బట్లు లేదా లైవ్ కౌంటర్లు వంటి ఐటమ్స్ రాయండి",
     "form.submit": "ఫుడ్ ఇంక్వైరీ పంపండి",
+    "form.selectedTitle": "ఎంచుకున్న ఫుడ్ ఐటమ్స్",
+    "form.clearSelection": "అన్నీ తీసివేయి",
     "foodNeed.welcome": "వెల్కమ్ డ్రింక్స్",
     "foodNeed.starters": "స్టార్టర్స్",
     "foodNeed.rice": "రైస్ ఐటమ్స్",
@@ -274,11 +292,18 @@ const translations = {
     "preference.both": "వెజ్ మరియు నాన్-వెజ్ రెండూ",
     "contact.kicker": "కాంటాక్ట్ పేజ్",
     "contact.title": "ఫాస్ట్ బుకింగ్ సపోర్ట్ కోసం కాల్ లేదా వాట్సాప్ చేయండి.",
-    "contact.copy": "కందనవోలు వట, కర్నూలు, ఆంధ్రప్రదేశ్. అన్ని ఫంక్షన్లకు 24/7 కేటరింగ్ ఇంక్వైరీ సపోర్ట్ అందిస్తాం.",
-    "contact.call": "93810 12345 కి కాల్ చేయండి",
-    "contact.whatsapp": "వాట్సాప్ బుకింగ్",
-    "contact.admin": "అడ్మిన్ బుకింగ్స్",
-    "quick.call": "కాల్",
+    "contact.copy": "కందనవోలు పాకశాల, కర్నూలు, ఆంధ్రప్రదేశ్. అన్ని ఫంక్షన్లకు 24/7 కేటరింగ్ ఇంక్వైరీ సపోర్ట్ అందిస్తాం.",
+    "contact.call1": "63005 48790 కి కాల్ చేయండి",
+    "contact.whatsapp1": "వాట్సాప్ 63005 48790",
+    "contact.call2": "90304 35532 కి కాల్ చేయండి",
+    "contact.whatsapp2": "వాట్సాప్ 90304 35532",
+    "contact.primary": "ప్రధాన హెల్ప్‌లైన్",
+    "contact.secondary": "సహాయక హెల్ప్‌లైన్",
+    "contact.callNow": "కాల్ చేయండి",
+    "contact.chatNow": "వాట్సాప్",
+    "contact.admin": "అడ్మిన్ డ్యాష్‌బోర్డ్",
+    "quick.call1": "కాల్ 1",
+    "quick.call2": "కాల్ 2",
     "quick.whatsapp": "వాట్సాప్",
     "footer.copy": "ఫంక్షన్లు, ఈవెంట్లు, లైవ్ కౌంటర్లకు 24/7 కర్నూలు గ్రామీణ ఫుడ్ సర్వీస్.",
     "status.loading": "ఇంక్వైరీ పంపుతున్నాం...",
@@ -301,7 +326,7 @@ const translations = {
     "tagline": "पारंपरिक स्वाद... गुणवत्ता सेवा",
     "tagline.dot": "पारंपरिक स्वाद. गुणवत्ता सेवा.",
     "hero.badge": "कर्नूल फूड सर्विस",
-    "hero.eyebrow": "कंदनवोलु वटा कैटरिंग सर्विसेज",
+    "hero.eyebrow": "कंदनवोलु पाकशाला कैटरिंग सर्विसेज",
     "hero.title": "हर कर्नूल समारोह के लिए पारंपरिक स्वाद.",
     "hero.copy": "वेलकम ड्रिंक्स, स्टार्टर्स, आंध्रा भोजन, करी, मिठाइयां, रागी संगती, नाटु कोडी पुलुसु, केले के पत्ते पर सर्विंग और लाइव काउंटर.",
     "hero.inquiry": "इंक्वायरी भेजें",
@@ -317,14 +342,14 @@ const translations = {
     "trust.area": "लोकल सर्विस एरिया",
     "trust.service": "ऑर्डर और सर्विस",
     "dock.explore": "फूड देखें",
-    "dock.exploreSmall": "67 आंध्रा फंक्शन आइटम्स",
+    "dock.exploreSmall": "90 आंध्रा फंक्शन आइटम्स",
     "dock.select": "फंक्शन चुनें",
     "dock.selectSmall": "शादियों से पारिवारिक समारोह तक",
     "dock.inquiry": "इंक्वायरी भेजें",
     "dock.inquirySmall": "24/7 कर्नूल कॉलबैक",
     "business.kicker": "बिजनेस कैटरिंग",
     "business.title": "हर फंक्शन साइज के लिए प्रोफेशनल फूड प्लानिंग.",
-    "business.copy": "कंदनवोलु वटा ग्राहकों को फूड आइटम, सर्विंग स्टाइल, गेस्ट काउंट और इवेंट डिटेल्स साफ बुकिंग प्रोसेस से चुनने में मदद करता है.",
+    "business.copy": "कंदनवोलु पाकशाला ग्राहकों को फूड आइटम, सर्विंग स्टाइल, गेस्ट काउंट और इवेंट डिटेल्स साफ बुकिंग प्रोसेस से चुनने में मदद करता है.",
     "business.card1Title": "क्विक बुकिंग",
     "business.card1Copy": "कॉल, WhatsApp या ऑनलाइन इंक्वायरी फॉर्म भेजें.",
     "business.card2Title": "इवेंट रेडी",
@@ -334,14 +359,14 @@ const translations = {
     "business.card4Title": "बुकिंग रिकॉर्ड्स",
     "business.card4Copy": "एडमिन इंक्वायरी देख सकता है और बुकिंग शीट डेटा एक्सपोर्ट कर सकता है.",
     "about.kicker": "हमारे बारे में",
-    "about.title": "कंदनवोलु वटा गांव का स्वाद आधुनिक फंक्शन्स तक लाता है.",
+    "about.title": "कंदनवोलु पाकशाला गांव का स्वाद आधुनिक फंक्शन्स तक लाता है.",
     "about.copy1": "हम कर्नूल में शादियों, एंगेजमेंट, गृहप्रवेश, मंदिर इवेंट्स, कॉर्पोरेट इवेंट्स, कॉलेज फंक्शन्स, आउटडोर इवेंट्स और पारिवारिक समारोह के लिए प्रोफेशनल आंध्रा गांव-स्टाइल कैटरिंग देते हैं.",
     "about.copy2": "हमारा ध्यान ताजा सामग्री, साफ-सुथरी कुकिंग, केले के पत्ते पर भोजन, लाइव काउंटर, वेज और नॉन-वेज विकल्प और स्पष्ट बुकिंग फॉलोअप पर है.",
     "about.business": "बिजनेस नाम",
     "about.location": "लोकेशन",
     "about.contact": "कॉन्टैक्ट",
     "services.kicker": "कैटरिंग सर्विसेज",
-    "services.title": "हर फंक्शन के लिए कंदनवोलु वटा.",
+    "services.title": "हर फंक्शन के लिए कंदनवोलु पाकशाला.",
     "services.copy": "शादियों, एंगेजमेंट, पारिवारिक फंक्शन्स, मंदिर, कॉलेज, कॉर्पोरेट, आउटडोर और गांव समारोह के लिए प्रोफेशनल कर्नूल कैटरिंग.",
     "services.foodTitle": "फंक्शन फूड",
     "services.foodCopy": "वेलकम ड्रिंक्स, स्टार्टर्स, आंध्रा भोजन, राइस आइटम्स, करी, दाल, सांभर, रोटी, फ्राई आइटम्स और मिठाइयां.",
@@ -368,7 +393,7 @@ const translations = {
     "functions.copy": "इंक्वायरी फॉर्म में वही फंक्शन टाइप चुनें ताकि बिजनेस को इवेंट डिटेल्स साफ मिलें.",
     "menu.kicker": "स्पेशल मेनू",
     "menu.title": "आंध्रा फंक्शन फूड आइटम्स",
-    "menu.count": "67 फंक्शन आइटम्स",
+    "menu.count": "90 फंक्शन आइटम्स",
     "packages.kicker": "कॉम्बिनेशन मील्स",
     "packages.title": "मशहूर गांव कॉम्बो",
     "reviews.kicker": "लोकल रिव्यू",
@@ -398,6 +423,8 @@ const translations = {
     "form.message": "मैसेज",
     "form.messagePlaceholder": "पानकम, मिर्ची बज्जी, बिरयानी, गुट्टी वंकाया, नाटु कोडी पुलुसु, बोब्बट्लू या लाइव काउंटर जैसे आइटम लिखें",
     "form.submit": "फूड इंक्वायरी भेजें",
+    "form.selectedTitle": "चुने गए फ़ूड आइटम्स",
+    "form.clearSelection": "सभी साफ़ करें",
     "foodNeed.welcome": "वेलकम ड्रिंक्स",
     "foodNeed.starters": "स्टार्टर्स",
     "foodNeed.rice": "राइस आइटम्स",
@@ -411,11 +438,18 @@ const translations = {
     "preference.both": "वेज और नॉन-वेज दोनों",
     "contact.kicker": "कॉन्टैक्ट पेज",
     "contact.title": "फास्ट बुकिंग सपोर्ट के लिए कॉल या WhatsApp करें.",
-    "contact.copy": "कंदनवोलु वटा, कर्नूल, आंध्र प्रदेश. हम सभी फंक्शन्स के लिए 24/7 कैटरिंग इंक्वायरी सपोर्ट देते हैं.",
-    "contact.call": "93810 12345 पर कॉल करें",
-    "contact.whatsapp": "WhatsApp बुकिंग",
-    "contact.admin": "एडमिन बुकिंग्स",
-    "quick.call": "कॉल",
+    "contact.copy": "कंदनवोलु पाकशाला, कर्नूल, आंध्र प्रदेश. हम सभी फंक्शन्स के लिए 24/7 कैटरिंग इंक्वायरी सपोर्ट देते हैं.",
+    "contact.call1": "63005 48790 पर कॉल करें",
+    "contact.whatsapp1": "WhatsApp 63005 48790",
+    "contact.call2": "90304 35532 पर कॉल करें",
+    "contact.whatsapp2": "WhatsApp 90304 35532",
+    "contact.primary": "मुख्य हेल्पलाइन",
+    "contact.secondary": "सहायक हेल्पलाइन",
+    "contact.callNow": "कॉल करें",
+    "contact.chatNow": "WhatsApp",
+    "contact.admin": "एडमिन डैशबोर्ड",
+    "quick.call1": "कॉल 1",
+    "quick.call2": "कॉल 2",
     "quick.whatsapp": "WhatsApp",
     "footer.copy": "फंक्शन्स, इवेंट्स और लाइव काउंटर के लिए 24/7 कर्नूल गांव-स्टाइल फूड सर्विस.",
     "status.loading": "इंक्वायरी भेज रहे हैं...",
@@ -474,6 +508,8 @@ const menuTranslations = {
   te: {
     "Welcome Drinks": "వెల్కమ్ డ్రింక్స్",
     "Starters": "స్టార్టర్స్",
+    "Tiffins": "టిఫిన్స్",
+    "Chutney, Curry & Podis": "నంజుకోవడానికి చట్నీలు, కూరలు మరియు పొడులు",
     "Rice Items": "రైస్ ఐటమ్స్",
     "Curries": "కూరలు",
     "Dal & Sambar": "పప్పు మరియు సాంబార్",
@@ -483,6 +519,8 @@ const menuTranslations = {
     "Sweets": "స్వీట్స్",
     "Traditional Village Special Items": "సాంప్రదాయ గ్రామీణ స్పెషల్ ఐటమ్స్",
     "Cool drinks for guest arrival": "అతిథుల స్వాగతానికి చల్లని పానీయాలు",
+    "Morning breakfast and tiffin items": "ఉదయపు అల్పాహారం మరియు టిఫిన్ ఐటమ్స్",
+    "Delicious sides, gravies, and spice powders": "రుచికరమైన పచ్చళ్లు, కూరలు మరియు కారప్పొడులు",
     "Hot veg and non-veg starters": "వేడి వెజ్ మరియు నాన్-వెజ్ స్టార్టర్స్",
     "Main rice dishes for Andhra meals": "ఆంధ్ర భోజనానికి ప్రధాన రైస్ వంటకాలు",
     "Veg and non-veg curries": "వెజ్ మరియు నాన్-వెజ్ కూరలు",
@@ -496,6 +534,8 @@ const menuTranslations = {
   hi: {
     "Welcome Drinks": "वेलकम ड्रिंक्स",
     "Starters": "स्टार्टर्स",
+    "Tiffins": "टिफिन",
+    "Chutney, Curry & Podis": "चटनी, करी और पोड़ी",
     "Rice Items": "राइस आइटम्स",
     "Curries": "करी",
     "Dal & Sambar": "दाल और सांभर",
@@ -505,6 +545,8 @@ const menuTranslations = {
     "Sweets": "मिठाइयां",
     "Traditional Village Special Items": "पारंपरिक गांव स्पेशल आइटम्स",
     "Cool drinks for guest arrival": "मेहमानों के स्वागत के लिए ठंडे पेय",
+    "Morning breakfast and tiffin items": "सुबह का नाश्ता और टिफिन आइटम्स",
+    "Delicious sides, gravies, and spice powders": "स्वादिष्ट चटनी, ग्रेवी और मसालेदार पाउडर",
     "Hot veg and non-veg starters": "गरम वेज और नॉन-वेज स्टार्टर्स",
     "Main rice dishes for Andhra meals": "आंध्रा भोजन के मुख्य राइस व्यंजन",
     "Veg and non-veg curries": "वेज और नॉन-वेज करी",
@@ -527,10 +569,10 @@ function localizeName(name, dictionary) {
 
 function translateStaticPage() {
   document.documentElement.lang = currentLanguage;
-  document.title = "Kandanavōlu Vata";
+  document.title = "Kandanavōlu Pākashāla";
 
   document.querySelectorAll(".brand strong, .visitor-card h2, .site-footer strong").forEach(element => {
-    element.textContent = "Kandanavōlu Vata";
+    element.textContent = "Kandanavōlu Pākashāla";
   });
 
   document.querySelectorAll("[data-i18n]").forEach(element => {
@@ -569,7 +611,19 @@ function renderMenu(categories) {
         <div class="region">${localizeName(category.note, menuTranslations)}</div>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="${listId}">${t("menu.viewItems")}</button>
         <ul id="${listId}" class="menu-items" hidden>
-          ${category.items.map(food => `<li>${food}</li>`).join("")}
+          ${category.items.map((food, foodIdx) => {
+            const inputId = `item-${index}-${foodIdx}`;
+            const isChecked = selectedItems.has(food) ? "checked" : "";
+            return `
+              <li>
+                <input type="checkbox" id="${inputId}" class="menu-item-checkbox" data-food="${food}" ${isChecked} hidden>
+                <label for="${inputId}" class="menu-item-label">
+                  <span class="checkbox-indicator">${selectedItems.has(food) ? "✔" : "✚"}</span>
+                  <span class="food-name">${food}</span>
+                </label>
+              </li>
+            `;
+          }).join("")}
         </ul>
       </div>
     </article>
@@ -619,7 +673,7 @@ function renderTestimonials(items) {
 
 function setLanguage(language) {
   currentLanguage = language;
-  localStorage.setItem("kv-language", language);
+  localStorage.setItem("kp-language", language);
   translateStaticPage();
   if (cachedMenu.length) renderMenu(cachedMenu);
   if (cachedPackages.length) renderPackages(cachedPackages);
@@ -666,11 +720,91 @@ menuGrid.addEventListener("click", event => {
   items.hidden = isOpen;
 });
 
+function updateSelectedItemsUI() {
+  if (!selectedItemsBox || !selectedItemsContainer) return;
+
+  if (selectedItems.size === 0) {
+    selectedItemsBox.style.display = "none";
+    selectedItemsContainer.innerHTML = "";
+    return;
+  }
+
+  selectedItemsBox.style.display = "block";
+  selectedItemsContainer.innerHTML = Array.from(selectedItems).map(food => {
+    return `
+      <span class="selected-item-tag">
+        <span>${food}</span>
+        <button type="button" class="remove-btn" data-food="${food}">&times;</button>
+      </span>
+    `;
+  }).join("");
+
+  // Update checkmarks in the menu grid
+  document.querySelectorAll(".menu-item-checkbox").forEach(cb => {
+    const food = cb.dataset.food;
+    const isChecked = selectedItems.has(food);
+    cb.checked = isChecked;
+    const indicator = cb.parentElement.querySelector(".checkbox-indicator");
+    if (indicator) indicator.textContent = isChecked ? "✔" : "✚";
+  });
+}
+
+// Menu item checkbox change event listener
+menuGrid.addEventListener("change", event => {
+  const checkbox = event.target.closest(".menu-item-checkbox");
+  if (!checkbox) return;
+
+  const food = checkbox.dataset.food;
+  if (checkbox.checked) {
+    selectedItems.add(food);
+  } else {
+    selectedItems.delete(food);
+  }
+
+  const indicator = checkbox.parentElement.querySelector(".checkbox-indicator");
+  if (indicator) {
+    indicator.textContent = checkbox.checked ? "✔" : "✚";
+  }
+
+  updateSelectedItemsUI();
+});
+
+// Remove item from tag list click handler
+if (selectedItemsContainer) {
+  selectedItemsContainer.addEventListener("click", event => {
+    const removeBtn = event.target.closest(".remove-btn");
+    if (!removeBtn) return;
+
+    const food = removeBtn.dataset.food;
+    selectedItems.delete(food);
+    updateSelectedItemsUI();
+  });
+}
+
+// Clear all selected items handler
+if (clearSelectedBtn) {
+  clearSelectedBtn.addEventListener("click", () => {
+    selectedItems.clear();
+    updateSelectedItemsUI();
+  });
+}
+
 bookingForm.addEventListener("submit", async event => {
   event.preventDefault();
   formStatus.textContent = t("status.loading");
 
-  const payload = Object.fromEntries(new FormData(bookingForm).entries());
+  const formData = new FormData(bookingForm);
+  const payload = Object.fromEntries(formData.entries());
+
+  // Intercept and inject selected items into message field
+  if (selectedItems.size > 0) {
+    const selectedText = `Selected Items: [${Array.from(selectedItems).join(", ")}]`;
+    if (payload.message) {
+      payload.message = `${selectedText}\n\nAdditional Requests: ${payload.message}`;
+    } else {
+      payload.message = selectedText;
+    }
+  }
 
   try {
     const response = await fetch("/api/inquiries", {
@@ -688,6 +822,8 @@ bookingForm.addEventListener("submit", async event => {
     }
 
     bookingForm.reset();
+    selectedItems.clear();
+    updateSelectedItemsUI();
     formStatus.textContent = `${result.message} Reference: ${result.inquiry.id}`;
   } catch (error) {
     formStatus.textContent = t("status.networkError");
@@ -695,3 +831,5 @@ bookingForm.addEventListener("submit", async event => {
 });
 
 boot();
+
+

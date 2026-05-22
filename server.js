@@ -6,7 +6,7 @@ const os = require("os");
 
 const PORT = process.env.PORT || 5173;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
-const ADMIN_SECRET = process.env.ADMIN_SECRET || "kandanavolu-vata-local-admin-secret";
+const ADMIN_SECRET = process.env.ADMIN_SECRET || "kandanavolu-paakashala-local-admin-secret";
 const ROOT = __dirname;
 const PUBLIC_DIR = path.join(ROOT, "public");
 const DATA_DIR = path.join(ROOT, "data");
@@ -165,7 +165,7 @@ async function saveInquiry(payload) {
   }
 
   const inquiry = {
-    id: `KV-${Date.now()}`,
+    id: `KP-${Date.now()}`,
     name: String(payload.name).trim(),
     phone: String(payload.phone).trim(),
     eventType: String(payload.eventType).trim(),
@@ -226,7 +226,7 @@ async function handleApi(req, res, url) {
     }
 
     const inquiries = await readJsonFile(INQUIRIES_FILE);
-    return sendCsv(res, "kandanavolu-vata-bookings.csv", inquiriesToCsv(inquiries));
+    return sendCsv(res, "kandanavolu-paakashala-bookings.csv", inquiriesToCsv(inquiries));
   }
 
   if (req.method === "GET" && pathname === "/api/menu") {
@@ -306,6 +306,10 @@ const server = http.createServer(async (req, res) => {
   return serveStatic(req, res, decodeURIComponent(url.pathname));
 });
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Kandanavolu Vata running at http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  server.listen(PORT, "0.0.0.0", () => {
+    console.log(`Kandanavolu Paakashala running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = server;
