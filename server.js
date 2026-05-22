@@ -10,7 +10,8 @@ const ADMIN_SECRET = process.env.ADMIN_SECRET || "kandanavolu-paakashala-local-a
 const ROOT = __dirname;
 const PUBLIC_DIR = path.join(ROOT, "public");
 const DATA_DIR = path.join(ROOT, "data");
-const INQUIRIES_FILE = path.join(DATA_DIR, "inquiries.json");
+const WRITABLE_DATA_DIR = process.env.VERCEL ? os.tmpdir() : DATA_DIR;
+const INQUIRIES_FILE = path.join(WRITABLE_DATA_DIR, "inquiries.json");
 
 const DATA_FILES = {
   menu: path.join(DATA_DIR, "menu.json"),
@@ -123,6 +124,15 @@ async function readJsonFile(filePath) {
   return JSON.parse(await fs.readFile(filePath, "utf8"));
 }
 
+async function readInquiries() {
+  try {
+    return await readJsonFile(INQUIRIES_FILE);
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -136,6 +146,12 @@ function readBody(req) {
     req.on("end", () => resolve(body));
     req.on("error", reject);
   });
+}
+
+async function readJsonBody(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  if (typeof req.body === "string") return JSON.parse(req.body || "{}");
+  return JSON.parse(await readBody(req) || "{}");
 }
 
 function validateInquiry(payload) {
@@ -155,14 +171,9 @@ function validateInquiry(payload) {
 }
 
 async function saveInquiry(payload) {
-  await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.mkdir(WRITABLE_DATA_DIR, { recursive: true });
 
-  let existing = [];
-  try {
-    existing = JSON.parse(await fs.readFile(INQUIRIES_FILE, "utf8"));
-  } catch (error) {
-    if (error.code !== "ENOENT") throw error;
-  }
+  const existing = await readInquiries();
 
   const inquiry = {
     id: `KP-${Date.now()}`,
@@ -197,7 +208,7 @@ async function handleApi(req, res, url) {
 
   if (req.method === "POST" && pathname === "/api/admin/login") {
     try {
-      const payload = JSON.parse(await readBody(req) || "{}");
+      const payload = await readJsonBody(req);
 
       if (String(payload.password || "") !== ADMIN_PASSWORD) {
         return sendJson(res, 401, { error: "Invalid admin password." });
@@ -217,7 +228,7 @@ async function handleApi(req, res, url) {
       return sendJson(res, 401, { error: "Admin login required." });
     }
 
-    return sendJson(res, 200, await readJsonFile(INQUIRIES_FILE));
+    return sendJson(res, 200, await readInquiries());
   }
 
   if (req.method === "GET" && pathname === "/api/inquiries.csv") {
@@ -225,7 +236,7 @@ async function handleApi(req, res, url) {
       return sendJson(res, 401, { error: "Admin login required." });
     }
 
-    const inquiries = await readJsonFile(INQUIRIES_FILE);
+    const inquiries = await readInquiries();
     return sendCsv(res, "kandanavolu-paakashala-bookings.csv", inquiriesToCsv(inquiries));
   }
 
@@ -250,21 +261,28 @@ async function handleApi(req, res, url) {
   }
 
   if (req.method === "POST" && pathname === "/api/inquiries") {
+    let payload;
+
     try {
-      const payload = JSON.parse(await readBody(req) || "{}");
-      const validationError = validateInquiry(payload);
+      payload = await readJsonBody(req);
+    } catch (error) {
+      return sendJson(res, 400, { error: "Please send a valid JSON inquiry." });
+    }
 
-      if (validationError) {
-        return sendJson(res, 400, { error: validationError });
-      }
+    const validationError = validateInquiry(payload);
 
+    if (validationError) {
+      return sendJson(res, 400, { error: validationError });
+    }
+
+    try {
       const inquiry = await saveInquiry(payload);
       return sendJson(res, 201, {
         message: "Inquiry received. We provide 24/7 village food service in Kurnool and our team will call back soon.",
         inquiry
       });
     } catch (error) {
-      return sendJson(res, 400, { error: "Please send a valid JSON inquiry." });
+      return sendJson(res, 500, { error: "Inquiry could not be saved. Please call or WhatsApp us directly." });
     }
   }
 
