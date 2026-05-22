@@ -34,9 +34,9 @@ const translations = {
     "tagline": "Traditional Taste... Quality Service",
     "tagline.dot": "Traditional Taste. Quality Service.",
     "hero.badge": "Kurnool food service",
-    "hero.eyebrow": "Kandanavōlu Pākashāla catering services",
+    "hero.eyebrow": "Kandanavolu Paakashala catering services",
     "hero.title": "Traditional taste for every Kurnool celebration.",
-    "hero.copy": "Welcome drinks, starters, Andhra meals, curries, sweets, ragi sangati, naatu kodi pulusu, banana leaf serving, and live counters for all types of functions.",
+    "hero.copy": "Premium Andhra catering for weddings, engagements, birthdays, housewarmings, corporate events, temple functions, and family gatherings.",
     "hero.inquiry": "Send inquiry",
     "hero.services": "View services",
     "visitor.pill": "Catering profile",
@@ -57,7 +57,7 @@ const translations = {
     "dock.inquirySmall": "24/7 Kurnool callback",
     "business.kicker": "Business Catering",
     "business.title": "Professional food planning for every function size.",
-    "business.copy": "Kandanavōlu Pākashāla helps customers choose food items, serving style, guest count, and event details with a clear booking process for fast follow-up.",
+    "business.copy": "Kandanavolu Paakashala helps customers choose food items, serving style, guest count, and event details with a clear booking process for fast follow-up.",
     "business.card1Title": "Quick Booking",
     "business.card1Copy": "Call, WhatsApp, or send the online inquiry form.",
     "business.card2Title": "Event Ready",
@@ -67,14 +67,14 @@ const translations = {
     "business.card4Title": "Booking Records",
     "business.card4Copy": "Admin can view inquiries and export booking sheet data.",
     "about.kicker": "About Us",
-    "about.title": "Kandanavōlu Pākashāla brings village taste to modern functions.",
+    "about.title": "Kandanavolu Paakashala brings village taste to modern functions.",
     "about.copy1": "We provide professional Andhra village-style catering in Kurnool for weddings, engagements, housewarming functions, temple events, corporate events, college functions, outdoor events, and family gatherings.",
     "about.copy2": "Our service focuses on fresh ingredients, hygienic cooking, banana leaf meals, live counters, veg and non-veg food options, and clear booking follow-up for every customer inquiry.",
     "about.business": "Business Name",
     "about.location": "Location",
     "about.contact": "Contact",
     "services.kicker": "Catering Services",
-    "services.title": "Kandanavōlu Pākashāla for every function.",
+    "services.title": "Kandanavolu Paakashala for every function.",
     "services.copy": "A professional Kurnool catering service for weddings, engagements, family functions, temple events, college events, corporate gatherings, outdoor events, and village celebrations.",
     "services.foodTitle": "Function Food",
     "services.foodCopy": "Welcome drinks, starters, Andhra meals, rice items, curries, dal, sambar, rotis, fry items, and sweets.",
@@ -146,7 +146,7 @@ const translations = {
     "preference.both": "Both veg and non-veg",
     "contact.kicker": "Contact Page",
     "contact.title": "Call or WhatsApp for fast booking support.",
-    "contact.copy": "Kandanavōlu Pākashāla, Kurnool, Andhra Pradesh. We support 24/7 catering inquiries for all functions.",
+    "contact.copy": "Kandanavolu Paakashala, Kurnool, Andhra Pradesh. We support 24/7 catering inquiries for all functions.",
     "contact.call1": "Call 63005 48790",
     "contact.whatsapp1": "WhatsApp 63005 48790",
     "contact.call2": "Call 90304 35532",
@@ -569,10 +569,10 @@ function localizeName(name, dictionary) {
 
 function translateStaticPage() {
   document.documentElement.lang = currentLanguage;
-  document.title = "Kandanavōlu Pākashāla";
+  document.title = "Kandanavolu Paakashala";
 
   document.querySelectorAll(".brand strong, .visitor-card h2, .site-footer strong").forEach(element => {
-    element.textContent = "Kandanavōlu Pākashāla";
+    element.textContent = "Kandanavolu Paakashala";
   });
 
   document.querySelectorAll("[data-i18n]").forEach(element => {
@@ -831,5 +831,4 @@ bookingForm.addEventListener("submit", async event => {
 });
 
 boot();
-
 
