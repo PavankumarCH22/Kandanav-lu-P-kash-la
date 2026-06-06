@@ -1060,6 +1060,42 @@ function timeoutPromise(ms, promise) {
   });
 }
 
+function openWhatsApp(payload) {
+  const phone = "916300548790"; // Primary Helpline
+  
+  let msg = `*Catering Inquiry - Kandanavolu Paakashala*\n\n`;
+  msg += `*Name:* ${payload.name || ""}\n`;
+  msg += `*Phone:* ${payload.phone || ""}\n`;
+  msg += `*Food Need:* ${payload.eventType || ""}\n`;
+  msg += `*Function Type:* ${payload.functionType || ""}\n`;
+  msg += `*Preference:* ${payload.foodPreference || ""}\n`;
+  msg += `*Guests:* ${payload.guests || ""}\n`;
+  msg += `*Date:* ${payload.eventDate || ""}\n`;
+  msg += `*Location:* ${payload.location || ""}\n`;
+  msg += `*Combo:* ${payload.packageName || "Custom"}\n\n`;
+  
+  if (selectedItems.size > 0) {
+    msg += `*Selected Food Items:* \n`;
+    Array.from(selectedItems).forEach(item => {
+      msg += `- ${item}\n`;
+    });
+    msg += `\n`;
+  }
+  
+  let detailsText = payload.message || "";
+  if (selectedItems.size > 0 && detailsText.includes("Selected Items: [")) {
+    const parts = detailsText.split("Additional Requests: ");
+    detailsText = parts.length > 1 ? parts[1] : "";
+  }
+  
+  if (detailsText) {
+    msg += `*Additional Details:* \n${detailsText}\n`;
+  }
+
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+}
+
 bookingForm.addEventListener("submit", async event => {
   event.preventDefault();
   formStatus.textContent = t("status.loading");
@@ -1090,11 +1126,13 @@ bookingForm.addEventListener("submit", async event => {
       });
       await timeoutPromise(4000, docRefPromise);
       
+      openWhatsApp(payload);
+
       bookingForm.reset();
       selectedItems.clear();
       updateSelectedItemsUI();
       const randomRef = "KP-" + Math.floor(100000 + Math.random() * 900000);
-      formStatus.textContent = "Inquiry sent successfully! Reference: " + randomRef;
+      formStatus.textContent = "Inquiry sent successfully! Redirecting to WhatsApp... Reference: " + randomRef;
     } catch (fireErr) {
       formStatus.textContent = "Error: " + fireErr.message;
     }
@@ -1126,10 +1164,12 @@ bookingForm.addEventListener("submit", async event => {
       });
     }
 
+    openWhatsApp(payload);
+
     bookingForm.reset();
     selectedItems.clear();
     updateSelectedItemsUI();
-    formStatus.textContent = `${result.message} Reference: ${result.inquiry.id}`;
+    formStatus.textContent = `${result.message} Redirecting to WhatsApp... Reference: ${result.inquiry.id}`;
   } catch (error) {
     formStatus.textContent = t("status.networkError");
   }
