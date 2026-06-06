@@ -1,3 +1,24 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDL1INc1SgeiipP2ArJIQSuOE_osAnDjFM",
+  authDomain: "kandanavolu-paakashala.firebaseapp.com",
+  projectId: "kandanavolu-paakashala",
+  storageBucket: "kandanavolu-paakashala.firebasestorage.app",
+  messagingSenderId: "622375436948",
+  appId: "1:622375436948:web:80049b02aaeb4a6f9caa81",
+  measurementId: "G-BTZB65XGHH"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
 const menuGrid = document.querySelector("#menuGrid");
 const packageGrid = document.querySelector("#packageGrid");
 const servingStyleGrid = document.querySelector("#servingStyleGrid");
@@ -1040,6 +1061,16 @@ bookingForm.addEventListener("submit", async event => {
     if (!response.ok) {
       formStatus.textContent = result.error || t("status.formError");
       return;
+    }
+
+    // Try saving to Firebase Firestore as well
+    try {
+      await addDoc(collection(db, "inquiries"), {
+        ...payload,
+        createdAt: new Date().toISOString()
+      });
+    } catch (fireErr) {
+      console.warn("Could not sync with Firebase Firestore:", fireErr.message);
     }
 
     bookingForm.reset();
