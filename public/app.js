@@ -14,11 +14,15 @@ const selectedItemsBox = document.querySelector("#selectedItemsBox");
 const selectedItemsContainer = document.querySelector("#selectedItemsContainer");
 const clearSelectedBtn = document.querySelector("#clearSelectedBtn");
 const messageInput = document.querySelector("#messageInput");
+const fontSizeSelect = document.querySelector("#fontSizeSelect");
 
 let currentLanguage = localStorage.getItem("kp-language") || "en";
+let currentFontSize = localStorage.getItem("kp-font-size") || "normal";
 let cachedFunctions = [];
 let cachedMenu = [];
 let cachedPackages = [];
+let cachedServingStyles = [];
+let currentServingSlideIndex = 0;
 const selectedItems = new Set();
 
 const translations = {
@@ -104,6 +108,8 @@ const translations = {
     "menu.count": "90 function items",
     "packages.kicker": "Combination Meals",
     "packages.title": "Famous village combos",
+    "serving.kicker": "Catering Specialties",
+    "serving.title": "Traditional serving & cooking styles",
     "reviews.kicker": "Local Reviews",
     "reviews.title": "What families say",
     "booking.kicker": "Booking Desk",
@@ -133,6 +139,11 @@ const translations = {
     "form.submit": "Request catering quote",
     "form.selectedTitle": "Selected Food Items",
     "form.clearSelection": "Clear All",
+    "form.fontSize": "Font Size",
+    "fontSize.small": "Small Size",
+    "fontSize.normal": "Normal Size",
+    "fontSize.large": "Large Size",
+    "fontSize.xlarge": "Extra Large",
     "foodNeed.welcome": "Welcome drinks",
     "foodNeed.starters": "Starters",
     "foodNeed.rice": "Rice items",
@@ -250,6 +261,8 @@ const translations = {
     "menu.count": "90 ఫంక్షన్ ఐటమ్స్",
     "packages.kicker": "కాంబినేషన్ భోజనాలు",
     "packages.title": "ప్రసిద్ధ గ్రామీణ కాంబోలు",
+    "serving.kicker": "కేటరింగ్ ప్రత్యేకతలు",
+    "serving.title": "సాంప్రదాయ వడ్డన & వంట పద్ధతులు",
     "reviews.kicker": "లోకల్ రివ్యూస్",
     "reviews.title": "కుటుంబాలు చెప్పేది",
     "booking.kicker": "బుకింగ్ డెస్క్",
@@ -279,6 +292,11 @@ const translations = {
     "form.submit": "ఫుడ్ ఇంక్వైరీ పంపండి",
     "form.selectedTitle": "ఎంచుకున్న ఫుడ్ ఐటమ్స్",
     "form.clearSelection": "అన్నీ తీసివేయి",
+    "form.fontSize": "అక్షరాల సైజు",
+    "fontSize.small": "చిన్న సైజు",
+    "fontSize.normal": "సాధారణ సైజు",
+    "fontSize.large": "పెద్ద సైజు",
+    "fontSize.xlarge": "చాలా పెద్దది",
     "foodNeed.welcome": "వెల్కమ్ డ్రింక్స్",
     "foodNeed.starters": "స్టార్టర్స్",
     "foodNeed.rice": "రైస్ ఐటమ్స్",
@@ -396,6 +414,8 @@ const translations = {
     "menu.count": "90 फंक्शन आइटम्स",
     "packages.kicker": "कॉम्बिनेशन मील्स",
     "packages.title": "मशहूर गांव कॉम्बो",
+    "serving.kicker": "केटरिंग विशेषताएं",
+    "serving.title": "पारंपरिक परोसने और पकाने की शैलियाँ",
     "reviews.kicker": "लोकल रिव्यू",
     "reviews.title": "परिवार क्या कहते हैं",
     "booking.kicker": "बुकिंग डेस्क",
@@ -425,6 +445,11 @@ const translations = {
     "form.submit": "फूड इंक्वायरी भेजें",
     "form.selectedTitle": "चुने गए फ़ूड आइटम्स",
     "form.clearSelection": "सभी साफ़ करें",
+    "form.fontSize": "अक्षर का आकार",
+    "fontSize.small": "छोटा आकार",
+    "fontSize.normal": "सामान्य आकार",
+    "fontSize.large": "बड़ा आकार",
+    "fontSize.xlarge": "बहुत बड़ा आकार",
     "foodNeed.welcome": "वेलकम ड्रिंक्स",
     "foodNeed.starters": "स्टार्टर्स",
     "foodNeed.rice": "राइस आइटम्स",
@@ -601,34 +626,110 @@ async function getJson(path) {
 
 function renderMenu(categories) {
   cachedMenu = categories;
-  menuGrid.innerHTML = categories.map((category, index) => {
-    const listId = `menu-items-${index}`;
-    return `
-    <article class="food-card menu-category">
-      <div class="food-card-body">
-        <span class="tag">${category.items.length} ${t("menu.items")}</span>
-        <h3>${localizeName(category.category, menuTranslations)}</h3>
-        <div class="region">${localizeName(category.note, menuTranslations)}</div>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="${listId}">${t("menu.viewItems")}</button>
-        <ul id="${listId}" class="menu-items" hidden>
-          ${category.items.map((food, foodIdx) => {
-            const inputId = `item-${index}-${foodIdx}`;
-            const isChecked = selectedItems.has(food) ? "checked" : "";
-            return `
-              <li>
-                <input type="checkbox" id="${inputId}" class="menu-item-checkbox" data-food="${food}" ${isChecked} hidden>
-                <label for="${inputId}" class="menu-item-label">
-                  <span class="checkbox-indicator">${selectedItems.has(food) ? "✔" : "✚"}</span>
-                  <span class="food-name">${food}</span>
-                </label>
-              </li>
-            `;
-          }).join("")}
-        </ul>
-      </div>
-    </article>
-  `;
-  }).join("");
+  if (menuGrid) {
+    menuGrid.innerHTML = categories.map((category, index) => {
+      const listId = `menu-items-${index}`;
+      return `
+      <article class="food-card menu-category">
+        <div class="food-card-body">
+          <span class="tag">${category.items.length} ${t("menu.items")}</span>
+          <h3>${localizeName(category.category, menuTranslations)}</h3>
+          <div class="region">${localizeName(category.note, menuTranslations)}</div>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="${listId}">${t("menu.viewItems")}</button>
+          <ul id="${listId}" class="menu-items" hidden>
+            ${category.items.map((food, foodIdx) => {
+              const inputId = `item-${index}-${foodIdx}`;
+              const isChecked = selectedItems.has(food) ? "checked" : "";
+              return `
+                <li>
+                  <input type="checkbox" id="${inputId}" class="menu-item-checkbox" data-food="${food}" ${isChecked} hidden>
+                  <label for="${inputId}" class="menu-item-label">
+                    <span class="checkbox-indicator">${selectedItems.has(food) ? "✔" : "✚"}</span>
+                    <span class="food-name">${food}</span>
+                  </label>
+                </li>
+              `;
+            }).join("")}
+          </ul>
+        </div>
+      </article>
+    `;
+    }).join("");
+  }
+}
+
+let currentSlideIndex = 0;
+
+function slidePackages(direction) {
+  const cards = document.querySelectorAll(".package-card");
+  if (!cards.length) return;
+
+  const cardWidth = cards[0].offsetWidth;
+  const gap = 20;
+  const track = document.querySelector("#packageGrid");
+  
+  let itemsPerPage = 3;
+  if (window.innerWidth <= 640) {
+    itemsPerPage = 1;
+  } else if (window.innerWidth <= 980) {
+    itemsPerPage = 2;
+  }
+  
+  const maxIndex = Math.max(0, cards.length - itemsPerPage);
+  
+  if (direction === "next") {
+    currentSlideIndex = Math.min(currentSlideIndex + 1, maxIndex);
+  } else if (direction === "prev") {
+    currentSlideIndex = Math.max(currentSlideIndex - 1, 0);
+  } else {
+    currentSlideIndex = Math.min(currentSlideIndex, maxIndex);
+  }
+  
+  const moveAmount = currentSlideIndex * (cardWidth + gap);
+  if (track) {
+    track.style.transform = `translateX(-${moveAmount}px)`;
+  }
+  
+  const prevBtn = document.querySelector("#packagePrevBtn");
+  const nextBtn = document.querySelector("#packageNextBtn");
+  if (prevBtn) prevBtn.disabled = currentSlideIndex === 0;
+  if (nextBtn) nextBtn.disabled = currentSlideIndex === maxIndex;
+}
+
+function slideServingStyles(direction) {
+  const cards = document.querySelectorAll(".serving-card");
+  if (!cards.length) return;
+
+  const cardWidth = cards[0].offsetWidth;
+  const gap = 20;
+  const track = document.querySelector("#servingStyleGrid");
+  
+  let itemsPerPage = 3;
+  if (window.innerWidth <= 640) {
+    itemsPerPage = 1;
+  } else if (window.innerWidth <= 980) {
+    itemsPerPage = 2;
+  }
+  
+  const maxIndex = Math.max(0, cards.length - itemsPerPage);
+  
+  if (direction === "next") {
+    currentServingSlideIndex = Math.min(currentServingSlideIndex + 1, maxIndex);
+  } else if (direction === "prev") {
+    currentServingSlideIndex = Math.max(currentServingSlideIndex - 1, 0);
+  } else {
+    currentServingSlideIndex = Math.min(currentServingSlideIndex, maxIndex);
+  }
+  
+  const moveAmount = currentServingSlideIndex * (cardWidth + gap);
+  if (track) {
+    track.style.transform = `translateX(-${moveAmount}px)`;
+  }
+  
+  const prevBtn = document.querySelector("#servingPrevBtn");
+  const nextBtn = document.querySelector("#servingNextBtn");
+  if (prevBtn) prevBtn.disabled = currentServingSlideIndex === 0;
+  if (nextBtn) nextBtn.disabled = currentServingSlideIndex === maxIndex;
 }
 
 function renderPackages(items) {
@@ -643,32 +744,140 @@ function renderPackages(items) {
   `).join("");
 
   packageSelect.innerHTML = `<option value="Custom">${t("form.custom")}</option>` + items.map(item => `<option value="${item.name}">${item.name}</option>`).join("");
+  
+  currentSlideIndex = 0;
+  setTimeout(() => slidePackages(), 50);
 }
 
 function renderServingStyles(items) {
-  servingStyleGrid.innerHTML = items.map(item => `
-    <span>${item}</span>
-  `).join("");
+  cachedServingStyles = items;
+  
+  const details = {
+    "Banana Leaf Meals": {
+      icon: "🌿",
+      themeClass: "serving-leaf",
+      desc: "Authentic festival feast served on fresh banana leaves.",
+      descTe: "తాజా అరటి ఆకులలో వడ్డించే ప్రాచీన విందు భోజనం.",
+      descHi: "ताजा केले के पत्ते पर परोसा जाने वाला पारंपरिक उत्सव भोज।"
+    },
+    "Traditional Andhra Serving": {
+      icon: "🍛",
+      themeClass: "serving-andhra",
+      desc: "Warm hospitality with traditional Andhra serving standards.",
+      descTe: "సాంప్రదాయ పద్ధతిలో వడ్డించే మర్యాదపూర్వక సేవ.",
+      descHi: "पारंपरिक आंध्र शैली में आतिथ्य सत्कार के साथ परोसना।"
+    },
+    "Brass/Steel Plates": {
+      icon: "🍽️",
+      themeClass: "serving-plates",
+      desc: "Premium dining experience using elegant traditional brass or steel dinnerware.",
+      descTe: "రాగి, ఇత్తడి లేదా స్టీల్ పాత్రలలో శుభ్రమైన భోజన సేవ.",
+      descHi: "भव्य पीतल या स्टील के बर्तनों में शाही भोजन का अनुभव।"
+    },
+    "Live Counters": {
+      icon: "🧑‍🍳",
+      themeClass: "serving-live",
+      desc: "Hot, fresh starters and live cooking stations at the venue.",
+      descTe: "వేడి వేడి రుచులు అందించే ప్రత్యక్ష లైవ్ కౌంటర్లు.",
+      descHi: "गर्म और ताज़ा स्टार्टर्स के लिए शानदार लाइव काउंटर।"
+    },
+    "Clay Pot Cooking": {
+      icon: "🏺",
+      themeClass: "serving-clay",
+      desc: "Aromatic dishes prepared in traditional clay pots for rustic taste.",
+      descTe: "సాంప్రదాయ మట్టి పాత్రలలో వండిన సహజ సిద్ధమైన వంటకాలు.",
+      descHi: "मिट्टी के बर्तनों में धीमी आंच पर पका स्वादिष्ट भोजन।"
+    },
+    "Wood Fire Chicken": {
+      icon: "🔥",
+      themeClass: "serving-wood",
+      desc: "Smoky, spicy country chicken cooked over slow wood fire.",
+      descTe: "కట్టెల పొయ్యి పై కాల్చిన ఘుమఘుమలాడే నాటు కోడి.",
+      descHi: "लकड़ी की आंच पर तैयार स्मोकी और लाजवाब विलेज चिकन।"
+    }
+  };
+
+  const titleTranslations = {
+    "Banana Leaf Meals": { te: "అరటి ఆకు భోజనాలు", hi: "केले के पत्ते का भोजन" },
+    "Traditional Andhra Serving": { te: "సాంప్రదాయ ఆంధ్రా వడ్డన", hi: "पारंपरिक आंध्र परोसना" },
+    "Brass/Steel Plates": { te: "ఇత్తడి & స్టీల్ ప్లేట్లు", hi: "पीतल और स्टील की थालियाँ" },
+    "Live Counters": { te: "లైవ్ కౌంటర్లు", hi: "लाइव काउंटर" },
+    "Clay Pot Cooking": { te: "మట్టి పాత్రల వంట", hi: "मिट्टी के बर्तनों में कुकिंग" },
+    "Wood Fire Chicken": { te: "కట్టెల పొయ్యి కోడి కూర", hi: "लकड़ी की आंच का चिकन" }
+  };
+
+  servingStyleGrid.innerHTML = items.map(item => {
+    const info = details[item] || { icon: "✨", themeClass: "serving-default", desc: "Premium catering specialty for your special event." };
+    const currentLang = currentLanguage || 'en';
+    let desc = info.desc;
+    if (currentLang === 'te' && info.descTe) desc = info.descTe;
+    if (currentLang === 'hi' && info.descHi) desc = info.descHi;
+    
+    const displayTitle = (titleTranslations[item] && titleTranslations[item][currentLang]) 
+      ? titleTranslations[item][currentLang] 
+      : item;
+
+    return `
+      <article class="serving-card ${info.themeClass}">
+        <div class="serving-icon-wrap">${info.icon}</div>
+        <h3>${displayTitle}</h3>
+        <p>${desc}</p>
+      </article>
+    `;
+  }).join("");
+
+  currentServingSlideIndex = 0;
+  setTimeout(() => slideServingStyles(), 50);
 }
 
 function renderFunctions(items) {
   cachedFunctions = items;
-  functionsGrid.innerHTML = items.map((item, index) => `
-    <span><strong>${String(index + 1).padStart(2, "0")}</strong>${localizeName(item, functionTranslations)}</span>
-  `).join("");
+  if (functionsGrid) {
+    functionsGrid.innerHTML = items.map((item, index) => `
+      <span><strong>${String(index + 1).padStart(2, "0")}</strong>${localizeName(item, functionTranslations)}</span>
+    `).join("");
+  }
 
-  functionSelect.innerHTML = `<option value="">${t("form.selectFunction")}</option>` + items.map(item => (
-    `<option value="${item}">${localizeName(item, functionTranslations)}</option>`
-  )).join("");
+  if (functionSelect) {
+    functionSelect.innerHTML = `<option value="">${t("form.selectFunction")}</option>` + items.map(item => (
+      `<option value="${item}">${localizeName(item, functionTranslations)}</option>`
+    )).join("");
+  }
 }
 
 function renderTestimonials(items) {
-  testimonialGrid.innerHTML = items.map(item => `
-    <article class="testimonial-card">
-      <p>"${item.text}"</p>
-      <strong>${item.name}</strong>
-    </article>
-  `).join("");
+  if (testimonialGrid) {
+    testimonialGrid.innerHTML = items.map(item => `
+      <article class="testimonial-card">
+        <p>"${item.text}"</p>
+        <strong>${item.name}</strong>
+      </article>
+    `).join("");
+  }
+}
+
+function setFontSize(size) {
+  currentFontSize = size;
+  localStorage.setItem("kp-font-size", size);
+  
+  // Remove existing size classes from root HTML element
+  document.documentElement.classList.remove("font-small", "font-normal", "font-large", "font-xlarge");
+  
+  // Add selected class
+  if (size === "small") {
+    document.documentElement.classList.add("font-small");
+  } else if (size === "normal") {
+    document.documentElement.classList.add("font-normal");
+  } else if (size === "large") {
+    document.documentElement.classList.add("font-large");
+  } else if (size === "xlarge") {
+    document.documentElement.classList.add("font-xlarge");
+  }
+  
+  // Sync the select dropdown element value
+  if (fontSizeSelect) {
+    fontSizeSelect.value = size;
+  }
 }
 
 function setLanguage(language) {
@@ -677,10 +886,12 @@ function setLanguage(language) {
   translateStaticPage();
   if (cachedMenu.length) renderMenu(cachedMenu);
   if (cachedPackages.length) renderPackages(cachedPackages);
+  if (cachedServingStyles.length) renderServingStyles(cachedServingStyles);
   if (cachedFunctions.length) renderFunctions(cachedFunctions);
 }
 
 async function boot() {
+  setFontSize(currentFontSize);
   translateStaticPage();
 
   try {
@@ -706,19 +917,27 @@ languageButtons.forEach(button => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
 });
 
-menuGrid.addEventListener("click", event => {
-  const toggle = event.target.closest(".menu-toggle");
-  if (!toggle) return;
+if (fontSizeSelect) {
+  fontSizeSelect.addEventListener("change", (event) => {
+    setFontSize(event.target.value);
+  });
+}
 
-  const card = toggle.closest(".menu-category");
-  const items = card.querySelector(".menu-items");
-  const isOpen = toggle.getAttribute("aria-expanded") === "true";
+if (menuGrid) {
+  menuGrid.addEventListener("click", event => {
+    const toggle = event.target.closest(".menu-toggle");
+    if (!toggle) return;
 
-  toggle.setAttribute("aria-expanded", String(!isOpen));
-  toggle.textContent = isOpen ? t("menu.viewItems") : t("menu.hideItems");
-  card.classList.toggle("is-open", !isOpen);
-  items.hidden = isOpen;
-});
+    const card = toggle.closest(".menu-category");
+    const items = card.querySelector(".menu-items");
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    toggle.textContent = isOpen ? t("menu.viewItems") : t("menu.hideItems");
+    card.classList.toggle("is-open", !isOpen);
+    items.hidden = isOpen;
+  });
+}
 
 function updateSelectedItemsUI() {
   if (!selectedItemsBox || !selectedItemsContainer) return;
@@ -750,24 +969,26 @@ function updateSelectedItemsUI() {
 }
 
 // Menu item checkbox change event listener
-menuGrid.addEventListener("change", event => {
-  const checkbox = event.target.closest(".menu-item-checkbox");
-  if (!checkbox) return;
+if (menuGrid) {
+  menuGrid.addEventListener("change", event => {
+    const checkbox = event.target.closest(".menu-item-checkbox");
+    if (!checkbox) return;
 
-  const food = checkbox.dataset.food;
-  if (checkbox.checked) {
-    selectedItems.add(food);
-  } else {
-    selectedItems.delete(food);
-  }
+    const food = checkbox.dataset.food;
+    if (checkbox.checked) {
+      selectedItems.add(food);
+    } else {
+      selectedItems.delete(food);
+    }
 
-  const indicator = checkbox.parentElement.querySelector(".checkbox-indicator");
-  if (indicator) {
-    indicator.textContent = checkbox.checked ? "✔" : "✚";
-  }
+    const indicator = checkbox.parentElement.querySelector(".checkbox-indicator");
+    if (indicator) {
+      indicator.textContent = checkbox.checked ? "✔" : "✚";
+    }
 
-  updateSelectedItemsUI();
-});
+    updateSelectedItemsUI();
+  });
+}
 
 // Remove item from tag list click handler
 if (selectedItemsContainer) {
@@ -828,6 +1049,31 @@ bookingForm.addEventListener("submit", async event => {
   } catch (error) {
     formStatus.textContent = t("status.networkError");
   }
+});
+
+const prevBtn = document.querySelector("#packagePrevBtn");
+const nextBtn = document.querySelector("#packageNextBtn");
+
+if (prevBtn) {
+  prevBtn.addEventListener("click", () => slidePackages("prev"));
+}
+if (nextBtn) {
+  nextBtn.addEventListener("click", () => slidePackages("next"));
+}
+
+const servingPrevBtn = document.querySelector("#servingPrevBtn");
+const servingNextBtn = document.querySelector("#servingNextBtn");
+
+if (servingPrevBtn) {
+  servingPrevBtn.addEventListener("click", () => slideServingStyles("prev"));
+}
+if (servingNextBtn) {
+  servingNextBtn.addEventListener("click", () => slideServingStyles("next"));
+}
+
+window.addEventListener("resize", () => {
+  slidePackages();
+  slideServingStyles();
 });
 
 boot();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="emerald">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,13 +19,20 @@
       <nav class="nav-links" aria-label="Main navigation">
         <a href="#home" data-i18n="nav.home">Home</a>
         <a href="#about" data-i18n="nav.about">About</a>
-        <a href="#services" data-i18n="nav.services">Services</a>
-        <a href="#functions" data-i18n="nav.functions">Functions</a>
-        <a href="#items" data-i18n="nav.menu">Menu</a>
-        <a href="#contact" data-i18n="nav.contact">Contact</a>
         <a href="#booking" data-i18n="nav.book">Book Now</a>
       </nav>
       <div class="header-controls">
+        <!-- Font Size Selector -->
+        <div class="font-size-selector-wrap">
+          <select id="fontSizeSelect" class="font-size-select" aria-label="Adjust font size">
+            <option value="small" data-i18n="fontSize.small">Small Size</option>
+            <option value="normal" data-i18n="fontSize.normal">Normal Size</option>
+            <option value="large" data-i18n="fontSize.large">Large Size</option>
+            <option value="xlarge" data-i18n="fontSize.xlarge">Extra Large</option>
+          </select>
+        </div>
+
+        <!-- Language Switcher -->
         <div class="language-switcher" aria-label="Language selector">
           <button type="button" data-lang="en">EN</button>
           <button type="button" data-lang="te">తెలుగు</button>
@@ -35,6 +42,7 @@
     </header>
 
     <main>
+      <!-- Hero Section -->
       <section class="hero" id="home">
         <img src="assets/village-feast.png" alt="South Indian village feast served on banana leaf">
         <div class="hero-overlay"></div>
@@ -44,15 +52,34 @@
               <strong>24/7</strong>
               <span data-i18n="hero.badge">Premium Kurnool catering</span>
             </div>
-            <p class="eyebrow">Kandanavolu Paakashala catering services</p>
+            <p class="eyebrow" data-i18n="hero.eyebrow">Kandanavolu Paakashala catering services</p>
             <h1 data-i18n="hero.title">Professional Andhra catering for every celebration.</h1>
             <p class="hero-copy" data-i18n="hero.copy">Carefully planned menus, authentic Rayalaseema taste, hygienic preparation, live counters, and warm guest service for weddings, family functions, and business events.</p>
+            
+            <!-- Dynamic Compact Stats Inside Hero -->
+            <div class="hero-stats">
+              <div class="stat-item">
+                <strong>15+</strong>
+                <span data-i18n="nav.functions">Functions</span>
+              </div>
+              <div class="stat-item">
+                <strong>90+</strong>
+                <span data-i18n="menu.count">Menu Items</span>
+              </div>
+              <div class="stat-item">
+                <strong>24/7</strong>
+                <span data-i18n="trust.service">Booking</span>
+              </div>
+            </div>
+
             <div class="hero-actions">
               <a class="button primary" href="#booking" data-i18n="hero.inquiry">Request a Quote</a>
               <a class="button secondary" href="https://wa.me/916300548790?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer">Book on WhatsApp</a>
             </div>
           </div>
-          <aside class="visitor-card" aria-label="Business service summary">
+          
+          <!-- Stunning 3D Floating Visitor Card -->
+          <aside class="visitor-card-3d" aria-label="Business service summary">
             <span class="visitor-pill" data-i18n="visitor.pill">Catering profile</span>
             <h2>Kandanavolu Paakashala</h2>
             <p data-i18n="visitor.copy">End-to-end catering support for guest planning, menu selection, preparation, serving, and live food counters.</p>
@@ -66,364 +93,196 @@
         </div>
       </section>
 
-      <section class="trust-strip" aria-label="Service highlights">
-        <div>
-          <strong>15+</strong>
-          <span>event categories</span>
-        </div>
-        <div>
-          <strong>90+</strong>
-          <span data-i18n="trust.items">menu options</span>
-        </div>
-        <div>
-          <strong>Kurnool</strong>
-          <span data-i18n="trust.area">service area</span>
-        </div>
-        <div>
-          <strong>24/7</strong>
-          <span data-i18n="trust.service">booking support</span>
-        </div>
-      </section>
-
-      <section class="service-dock" aria-label="Fast visitor actions">
-        <a href="#items">
-          <span>01</span>
-          <strong data-i18n="dock.explore">Explore Menus</strong>
-          <small data-i18n="dock.exploreSmall">Andhra meals, sweets, and counters</small>
-        </a>
-        <a href="#functions">
-          <span>02</span>
-          <strong data-i18n="dock.select">Choose Event</strong>
-          <small data-i18n="dock.selectSmall">Weddings, receptions, and gatherings</small>
-        </a>
-        <a href="#booking">
-          <span>03</span>
-          <strong data-i18n="dock.inquiry">Request Quote</strong>
-          <small data-i18n="dock.inquirySmall">Fast callback from our team</small>
-        </a>
-      </section>
-
-      <section class="premium-services" id="services" aria-label="Premium catering services">
-        <div class="section-heading">
-          <div>
-            <span class="section-kicker">What We Do</span>
-            <h2>Premium catering services for every occasion.</h2>
-          </div>
-          <a class="button secondary service-link" href="#functions">View all services</a>
-        </div>
-        <div class="premium-service-grid">
-          <article>
-            <img src="assets/village-feast.png" alt="Wedding feast served on banana leaf">
-            <div>
-              <span>01</span>
-              <h3>Wedding Events</h3>
-              <p>Complete menu planning with banana leaf meals, sweets, specials, live counters, and attentive guest service.</p>
-            </div>
-          </article>
-          <article>
-            <img src="assets/kandanavolu-vata-poster.png" alt="Traditional Andhra catering spread">
-            <div>
-              <span>02</span>
-              <h3>Family Functions</h3>
-              <p>Housewarmings, birthdays, naming ceremonies, half saree functions, and festival gatherings with fresh regional taste.</p>
-            </div>
-          </article>
-          <article>
-            <img src="assets/kandanavolu-paakashala-poster.jpg" alt="Kandanavolu Paakashala catering poster">
-            <div>
-              <span>03</span>
-              <h3>Corporate and Outdoor Events</h3>
-              <p>Organized catering for teams, colleges, temple events, bulk orders, and outdoor celebrations.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
+      <!-- Compact About & Premium Services Highlight -->
       <section class="section about-section" id="about">
         <div class="section-heading">
           <div>
             <span class="section-kicker" data-i18n="about.kicker">About Us</span>
-            <h2>Authentic village taste with modern catering standards.</h2>
+            <h2 data-i18n="about.title">Authentic village taste with modern catering standards.</h2>
           </div>
           <span class="availability" data-i18n="tagline">Traditional Taste... Quality Service</span>
         </div>
-        <div class="about-grid">
-          <p data-i18n="about.copy1">We provide professional Andhra village-style catering in Kurnool for weddings, engagements, housewarming functions, temple events, corporate events, college functions, outdoor events, and family gatherings.</p>
-          <p data-i18n="about.copy2">Our team focuses on fresh ingredients, hygienic preparation, punctual service, banana leaf meals, live counters, and flexible veg and non-veg menu planning.</p>
-          <div class="about-card">
-            <strong data-i18n="about.business">Business Name</strong>
-            <span>Kandanavolu Paakashala</span>
+        <div class="about-modern-grid">
+          <div class="about-card-3d">
+            <div class="card-icon">🍛</div>
+            <h3 data-i18n="services.foodTitle">Wedding & Function Food</h3>
+            <p data-i18n="services.foodCopy">Welcome drinks, starters, Andhra meals, rice items, curries, dal, sambar, rotis, fry items, and sweets.</p>
           </div>
-          <div class="about-card">
-            <strong data-i18n="about.location">Location</strong>
-            <span>Kurnool, Andhra Pradesh</span>
+          <div class="about-card-3d">
+            <div class="card-icon">🔥</div>
+            <h3 data-i18n="services.specialTitle">Village Specials</h3>
+            <p data-i18n="services.specialCopy">Ragi Sangati, Naatu Kodi Pulusu, Ulavacharu, clay-pot style food, banana leaf meals, and live counters.</p>
           </div>
-          <div class="about-card">
-            <strong data-i18n="about.contact">Contact</strong>
-            <span>63005 48790, 90304 35532</span>
+          <div class="about-card-3d">
+            <div class="card-icon">🌿</div>
+            <h3 data-i18n="services.promiseTitle">Hygienic Cooking & Quality</h3>
+            <p data-i18n="services.promiseCopy">Responsive booking support, hygienic cooking, fresh ingredients, an experienced team, and bulk orders accepted.</p>
           </div>
         </div>
       </section>
 
-      <section class="promo-poster" id="poster" aria-label="Kandanavolu Paakashala catering services overview">
-        <div class="poster-main">
-          <span class="section-kicker" data-i18n="services.kicker">Catering Services</span>
-          <h2>Kandanavolu Paakashala for every function.</h2>
-          <p class="poster-lead" data-i18n="services.copy">A professional Kurnool catering service for weddings, engagements, family functions, temple events, college events, corporate gatherings, outdoor events, and village celebrations.</p>
-          <div class="poster-menu">
-            <article>
-              <h3 data-i18n="services.foodTitle">Function Food</h3>
-              <p data-i18n="services.foodCopy">Welcome drinks, starters, Andhra meals, rice items, curries, dal, sambar, rotis, fry items, and sweets.</p>
-            </article>
-            <article>
-              <h3 data-i18n="services.specialTitle">Village Specials</h3>
-              <p data-i18n="services.specialCopy">Ragi Sangati, Naatu Kodi Pulusu, Ulavacharu, clay-pot style food, banana leaf meals, and live counters.</p>
-            </article>
-            <article>
-              <h3 data-i18n="services.promiseTitle">Service Promise</h3>
-              <p data-i18n="services.promiseCopy">Responsive booking support, hygienic cooking, fresh ingredients, an experienced team, and bulk orders accepted.</p>
-            </article>
-          </div>
-          <div class="poster-specialties">
-            <span data-i18n="specialty.taste">Traditional Andhra Taste</span>
-            <span data-i18n="specialty.hygiene">Hygienic Cooking</span>
-            <span data-i18n="specialty.fresh">Fresh Ingredients</span>
-            <span data-i18n="specialty.live">Live Counters Available</span>
-            <span data-i18n="specialty.leaf">Banana Leaf Meals</span>
-            <span data-i18n="specialty.bulk">Bulk Orders Accepted</span>
-          </div>
-        </div>
-        <div class="poster-food">
-          <div class="poster-photo">
-            <img src="assets/kandanavolu-paakashala-poster.jpg" alt="Kandanavolu Paakashala catering services poster">
-          </div>
-        </div>
-        <div class="poster-footer">
-          <span>63005 48790 / 90304 35532</span>
-          <strong data-i18n="tagline.dot">Traditional Taste. Quality Service.</strong>
-          <span>Kurnool, Andhra Pradesh</span>
-        </div>
-      </section>
 
-      <section class="why-section" aria-label="Why choose Kandanavolu Paakashala">
-        <div class="why-copy">
-          <span class="section-kicker">Why Choose Us</span>
-          <h2>Leave your guests happy with fabulous food.</h2>
-          <p>We focus on authentic Rayalaseema taste, hygienic cooking, flexible menus, clear booking details, and warm serving for every guest.</p>
-        </div>
-        <div class="why-grid">
-          <article>
-            <strong>Authentic Taste</strong>
-            <span>Traditional recipes with Andhra and village-style specials.</span>
-          </article>
-          <article>
-            <strong>Service Excellence</strong>
-            <span>Organized serving for small family events and large functions.</span>
-          </article>
-          <article>
-            <strong>Best Quality</strong>
-            <span>Fresh ingredients, hygienic preparation, and food served hot.</span>
-          </article>
-          <article>
-            <strong>Menu Variety</strong>
-            <span>Veg, non-veg, live counters, sweets, tiffins, and bulk orders.</span>
-          </article>
-        </div>
-      </section>
 
-      <section class="event-route" aria-label="Visitor ordering route">
-        <div class="route-card route-main">
-          <span class="section-kicker" data-i18n="route.kicker">Visitor Route</span>
-          <h2 data-i18n="route.title">From food idea to function service.</h2>
-        </div>
-        <div class="route-card">
-          <strong data-i18n="route.browse">Browse</strong>
-          <p data-i18n="route.browseCopy">Review drinks, starters, meals, curries, sweets, and specials in one place.</p>
-        </div>
-        <div class="route-card">
-          <strong data-i18n="route.choose">Choose</strong>
-          <p data-i18n="route.chooseCopy">Choose a ready combo or share a custom item list for your event.</p>
-        </div>
-        <div class="route-card">
-          <strong data-i18n="route.serve">Serve</strong>
-          <p data-i18n="route.serveCopy">We align food, location, guest count, and serving style before the event.</p>
-        </div>
-      </section>
-
-      <section class="functions-section" id="functions">
-        <div class="functions-head">
-          <span class="section-kicker" data-i18n="functions.kicker">Functions We Serve</span>
-          <h2 data-i18n="functions.title">Food service for every Kurnool celebration.</h2>
-          <p data-i18n="functions.copy">Choose your event type in the booking form so our team can suggest the right menu and serving plan.</p>
-        </div>
-        <div class="functions-grid" id="functionsGrid"></div>
-      </section>
-
-      <section class="section menu-section" id="items">
-        <div class="section-heading">
-          <div>
-            <div class="section-kicker" data-i18n="menu.kicker">Special Menu</div>
-            <h2 data-i18n="menu.title">Curated Andhra function menu</h2>
-          </div>
-          <span class="availability" data-i18n="menu.count">90 function items</span>
-        </div>
-        <div class="menu-grid" id="menuGrid"></div>
-      </section>
-
+      <!-- Dynamic Combos Section (Slider with Manual Controls) -->
       <section class="section package-section" id="packages">
         <div class="section-heading">
           <div>
             <div class="section-kicker" data-i18n="packages.kicker">Combination Meals</div>
             <h2 data-i18n="packages.title">Famous village combos</h2>
           </div>
-        </div>
-        <div class="package-grid" id="packageGrid"></div>
-        <div class="serving-style-grid" id="servingStyleGrid" aria-label="Traditional serving styles"></div>
-      </section>
-
-      <section class="section stories-section">
-        <div>
-          <div class="section-kicker" data-i18n="reviews.kicker">Local Reviews</div>
-          <h2 data-i18n="reviews.title">What families say</h2>
-        </div>
-        <div class="testimonial-grid" id="testimonialGrid"></div>
-      </section>
-
-      <section class="booking-section" id="booking">
-        <div class="booking-copy">
-          <div class="section-kicker" data-i18n="booking.kicker">Booking Desk</div>
-          <h2 data-i18n="booking.title">Tell us about your event.</h2>
-          <p data-i18n="booking.copy">Share the function type, food preference, guest count, location, and date. Our team will review the details and contact you with the next steps.</p>
-          <div class="contact-row">
-            <span data-i18n="booking.leaf">Banana leaf serving</span>
-            <span data-i18n="booking.live">Live counters</span>
-            <span data-i18n="booking.service">24/7 service</span>
-            <span data-i18n="booking.export">Custom menu planning</span>
+          <!-- Slider manual controls -->
+          <div class="slider-controls">
+            <button type="button" class="slider-btn prev-btn" id="packagePrevBtn" aria-label="Previous combo">&larr;</button>
+            <button type="button" class="slider-btn next-btn" id="packageNextBtn" aria-label="Next combo">&rarr;</button>
           </div>
         </div>
-        <form class="booking-form" id="bookingForm">
-          <label>
-            <span data-i18n="form.name">Name</span>
-            <input name="name" type="text" placeholder="Your name" data-i18n-placeholder="form.namePlaceholder" required>
-          </label>
-          <label>
-            <span data-i18n="form.phone">Phone</span>
-            <input name="phone" type="tel" placeholder="98765 43210" required>
-          </label>
-          <label>
-            <span data-i18n="form.foodNeed">Food need</span>
-            <select name="eventType" required>
-              <option value="" data-i18n="form.selectFoodNeed">Select food need</option>
-              <option value="Welcome drinks" data-i18n="foodNeed.welcome">Welcome drinks</option>
-              <option value="Starters" data-i18n="foodNeed.starters">Starters</option>
-              <option value="Rice items" data-i18n="foodNeed.rice">Rice items</option>
-              <option value="Curries and dal" data-i18n="foodNeed.curries">Curries and dal</option>
-              <option value="Non-veg specials" data-i18n="foodNeed.nonVeg">Non-veg specials</option>
-              <option value="Sweets" data-i18n="foodNeed.sweets">Sweets</option>
-              <option value="Live counters" data-i18n="foodNeed.live">Live counters</option>
-              <option value="Custom item order" data-i18n="foodNeed.custom">Custom item order</option>
-            </select>
-          </label>
-          <label>
-            <span data-i18n="form.functionType">Function type</span>
-            <select name="functionType" id="functionSelect" required>
-              <option value="" data-i18n="form.selectFunction">Select function</option>
-            </select>
-          </label>
-          <label>
-            <span data-i18n="form.preference">Veg / Non-veg</span>
-            <select name="foodPreference" required>
-              <option value="" data-i18n="form.selectPreference">Select preference</option>
-              <option value="Veg" data-i18n="preference.veg">Veg</option>
-              <option value="Non-veg" data-i18n="preference.nonVeg">Non-veg</option>
-              <option value="Both veg and non-veg" data-i18n="preference.both">Both veg and non-veg</option>
-            </select>
-          </label>
-          <label>
-            <span data-i18n="form.guests">Guests</span>
-            <input name="guests" type="number" min="20" placeholder="150" required>
-          </label>
-          <label>
-            <span data-i18n="form.date">Date</span>
-            <input name="eventDate" type="date" required>
-          </label>
-          <label>
-            <span data-i18n="form.area">Kurnool area</span>
-            <input name="location" type="text" placeholder="Nandyal Road, Adoni, Yemmiganur..." data-i18n-placeholder="form.areaPlaceholder" value="Kurnool">
-          </label>
-          <label>
-            <span data-i18n="form.package">Combo or food set</span>
-            <select name="packageName" id="packageSelect">
-              <option value="Custom" data-i18n="form.custom">Custom</option>
-            </select>
-          </label>
-          <!-- Selected Food Items Section -->
-          <div class="selected-items-box full-span" id="selectedItemsBox" style="display: none;">
-            <div class="selected-items-head">
-              <span class="selected-title" data-i18n="form.selectedTitle">Selected Food Items</span>
-              <button type="button" class="clear-selected-btn" id="clearSelectedBtn" data-i18n="form.clearSelection">Clear All</button>
+        <div class="package-slider-viewport">
+          <div class="package-slider-track" id="packageGrid"></div>
+        </div>
+        <!-- Traditional Serving Styles Slider -->
+        <div class="serving-style-slider-wrap">
+          <div class="section-heading">
+            <div>
+              <div class="section-kicker" data-i18n="serving.kicker">Catering Specialties</div>
+              <h2 data-i18n="serving.title">Traditional serving & cooking styles</h2>
             </div>
-            <div class="selected-items-container" id="selectedItemsContainer"></div>
+            <!-- Slider manual controls -->
+            <div class="slider-controls">
+              <button type="button" class="slider-btn prev-btn" id="servingPrevBtn" aria-label="Previous serving style">&larr;</button>
+              <button type="button" class="slider-btn next-btn" id="servingNextBtn" aria-label="Next serving style">&rarr;</button>
+            </div>
           </div>
-
-          <label class="full-span">
-            <span data-i18n="form.message">Message</span>
-            <textarea name="message" id="messageInput" rows="4" placeholder="Mention items like panakam, mirchi bajji, biryani, gutti vankaya, naatu kodi pulusu, bobbatlu, or live counters" data-i18n-placeholder="form.messagePlaceholder"></textarea>
-          </label>
-          <button class="button primary full-span" type="submit" data-i18n="form.submit">Request catering quote</button>
-          <p class="form-status full-span" id="formStatus" role="status"></p>
-        </form>
+          <div class="serving-slider-viewport">
+            <div class="serving-slider-track" id="servingStyleGrid" aria-label="Traditional serving styles"></div>
+          </div>
+        </div>
       </section>
 
-      <section class="contact-section" id="contact">
-        <div class="contact-section-grid">
-          <div class="contact-details-panel">
-            <span class="section-kicker" data-i18n="contact.kicker">Contact</span>
-            <h2 data-i18n="contact.title">Call or WhatsApp for booking support.</h2>
-            <p data-i18n="contact.copy">Kandanavolu Paakashala serves Kurnool and nearby areas with professional catering support for weddings, family functions, and organized events.</p>
-          </div>
-          <div>
-            <div class="contact-cards">
-              <!-- Card 1 -->
-              <div class="helpline-card">
-                <div class="helpline-header">
-                  <div class="helpline-icon-wrap">Call</div>
-                  <div class="helpline-info">
+      <!-- Combined Ultimate Booking Desk & Contact Section (Catering Desk) -->
+      <section class="booking-section" id="booking">
+        <div class="booking-grid-wrapper">
+          <div class="booking-copy">
+            <div class="section-kicker" data-i18n="booking.kicker">Booking Desk</div>
+            <h2 data-i18n="booking.title">Tell us about your event.</h2>
+            <p data-i18n="booking.copy">Share the function type, food preference, guest count, location, and date. Our team will review the details and contact you with the next steps.</p>
+            
+            <div class="contact-compact-panel">
+              <h3 data-i18n="contact.title">Call or WhatsApp for booking support.</h3>
+              <div class="compact-helplines">
+                <!-- Compact Card 1 -->
+                <div class="compact-card">
+                  <div class="helpline-icon-wrap">📞</div>
+                  <div class="compact-info">
                     <strong data-i18n="contact.primary">Primary Helpline</strong>
                     <span class="helpline-num">63005 48790</span>
                   </div>
+                  <div class="compact-buttons">
+                    <a class="compact-btn call-btn" href="tel:6300548790" data-i18n="contact.callNow">Call Now</a>
+                    <a class="compact-btn wa-btn" href="https://wa.me/916300548790?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer" data-i18n="contact.chatNow">WhatsApp</a>
+                  </div>
                 </div>
-                <div class="helpline-buttons">
-                  <a class="helpline-btn call-btn" href="tel:6300548790" data-i18n="contact.callNow">Call Now</a>
-                  <a class="helpline-btn wa-btn" href="https://wa.me/916300548790?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer" data-i18n="contact.chatNow">WhatsApp</a>
-                </div>
-              </div>
-              <!-- Card 2 -->
-              <div class="helpline-card">
-                <div class="helpline-header">
-                  <div class="helpline-icon-wrap">Call</div>
-                  <div class="helpline-info">
+                <!-- Compact Card 2 -->
+                <div class="compact-card">
+                  <div class="helpline-icon-wrap">📞</div>
+                  <div class="compact-info">
                     <strong data-i18n="contact.secondary">Secondary Helpline</strong>
                     <span class="helpline-num">90304 35532</span>
                   </div>
-                </div>
-                <div class="helpline-buttons">
-                  <a class="helpline-btn call-btn" href="tel:9030435532" data-i18n="contact.callNow">Call Now</a>
-                  <a class="helpline-btn wa-btn" href="https://wa.me/919030435532?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer" data-i18n="contact.chatNow">WhatsApp</a>
+                  <div class="compact-buttons">
+                    <a class="compact-btn call-btn" href="tel:9030435532" data-i18n="contact.callNow">Call Now</a>
+                    <a class="compact-btn wa-btn" href="https://wa.me/919030435532?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer" data-i18n="contact.chatNow">WhatsApp</a>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="admin-link-wrapper">
+            
+            <div class="admin-link-wrapper-compact">
               <a class="admin-link" href="/admin.html" data-i18n="contact.admin">Admin Dashboard &rarr;</a>
             </div>
           </div>
+
+          <!-- Deep 3D Embossed Booking Form -->
+          <form class="booking-form-3d" id="bookingForm">
+            <label>
+              <span data-i18n="form.name">Name</span>
+              <input name="name" type="text" placeholder="Your name" data-i18n-placeholder="form.namePlaceholder" required>
+            </label>
+            <label>
+              <span data-i18n="form.phone">Phone</span>
+              <input name="phone" type="tel" placeholder="98765 43210" required>
+            </label>
+            <label>
+              <span data-i18n="form.foodNeed">Food need</span>
+              <select name="eventType" required>
+                <option value="" data-i18n="form.selectFoodNeed">Select food need</option>
+                <option value="Welcome drinks" data-i18n="foodNeed.welcome">Welcome drinks</option>
+                <option value="Starters" data-i18n="foodNeed.starters">Starters</option>
+                <option value="Rice items" data-i18n="foodNeed.rice">Rice items</option>
+                <option value="Curries and dal" data-i18n="foodNeed.curries">Curries and dal</option>
+                <option value="Non-veg specials" data-i18n="foodNeed.nonVeg">Non-veg specials</option>
+                <option value="Sweets" data-i18n="foodNeed.sweets">Sweets</option>
+                <option value="Live counters" data-i18n="foodNeed.live">Live counters</option>
+                <option value="Custom item order" data-i18n="foodNeed.custom">Custom item order</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="form.functionType">Function type</span>
+              <select name="functionType" id="functionSelect" required>
+                <option value="" data-i18n="form.selectFunction">Select function</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="form.preference">Veg / Non-veg</span>
+              <select name="foodPreference" required>
+                <option value="" data-i18n="form.selectPreference">Select preference</option>
+                <option value="Veg" data-i18n="preference.veg">Veg</option>
+                <option value="Non-veg" data-i18n="preference.nonVeg">Non-veg</option>
+                <option value="Both veg and non-veg" data-i18n="preference.both">Both veg and non-veg</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="form.guests">Guests</span>
+              <input name="guests" type="number" min="20" placeholder="150" required>
+            </label>
+            <label>
+              <span data-i18n="form.date">Date</span>
+              <input name="eventDate" type="date" required>
+            </label>
+            <label>
+              <span data-i18n="form.area">Kurnool area</span>
+              <input name="location" type="text" placeholder="Nandyal Road, Adoni, Yemmiganur..." data-i18n-placeholder="form.areaPlaceholder" value="Kurnool">
+            </label>
+            <label>
+              <span data-i18n="form.package">Combo or food set</span>
+              <select name="packageName" id="packageSelect">
+                <option value="Custom" data-i18n="form.custom">Custom</option>
+              </select>
+            </label>
+            
+            <!-- Selected Food Items Section -->
+            <div class="selected-items-box full-span" id="selectedItemsBox" style="display: none;">
+              <div class="selected-items-head">
+                <span class="selected-title" data-i18n="form.selectedTitle">Selected Food Items</span>
+                <button type="button" class="clear-selected-btn" id="clearSelectedBtn" data-i18n="form.clearSelection">Clear All</button>
+              </div>
+              <div class="selected-items-container" id="selectedItemsContainer"></div>
+            </div>
+
+            <label class="full-span">
+              <span data-i18n="form.message">Message</span>
+              <textarea name="message" id="messageInput" rows="3" placeholder="Mention items like panakam, mirchi bajji, biryani, gutti vankaya, naatu kodi pulusu, bobbatlu, or live counters" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+            </label>
+            <button class="button primary full-span" type="submit" data-i18n="form.submit">Request catering quote</button>
+            <p class="form-status full-span" id="formStatus" role="status"></p>
+          </form>
         </div>
       </section>
     </main>
 
+    <!-- Floating Contact Actions -->
     <div class="quick-actions" aria-label="Quick contact actions">
       <a href="tel:6300548790" data-i18n="quick.call1">Call Primary</a>
-      <a href="tel:9030435532" data-i18n="quick.call2">Call Secondary</a>
+      <a href="tel:90304 35532" data-i18n="quick.call2">Call Secondary</a>
       <a href="https://wa.me/916300548790?text=Hi%20Kandanavolu%20Paakashala%2C%20I%20want%20to%20book%20catering%20service" target="_blank" rel="noreferrer" data-i18n="quick.whatsapp">WhatsApp</a>
     </div>
 
