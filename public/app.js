@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,8 +16,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+let analytics;
+try {
+  analytics = getAnalytics(app);
+} catch (analyticsErr) {
+  console.warn("Firebase Analytics failed to initialize (usually blocked by ad blocker):", analyticsErr.message);
+}
+let db;
+try {
+  db = getFirestore(app);
+} catch (dbErr) {
+  console.error("Firestore failed to initialize:", dbErr.message);
+}
 
 const menuGrid = document.querySelector("#menuGrid");
 const packageGrid = document.querySelector("#packageGrid");
@@ -1069,6 +1079,10 @@ bookingForm.addEventListener("submit", async event => {
 
   const isFirebaseHosting = window.location.hostname.endsWith("web.app") || window.location.hostname.endsWith("firebaseapp.com");
   if (isFirebaseHosting) {
+    if (!db) {
+      formStatus.textContent = "Error: Database failed to initialize.";
+      return;
+    }
     try {
       const docRefPromise = addDoc(collection(db, "inquiries"), {
         ...payload,
@@ -1103,12 +1117,14 @@ bookingForm.addEventListener("submit", async event => {
     }
 
     // Try saving to Firebase Firestore in the background (do not block the UI)
-    addDoc(collection(db, "inquiries"), {
-      ...payload,
-      createdAt: new Date().toISOString()
-    }).catch(fireErr => {
-      console.warn("Could not sync with Firebase Firestore:", fireErr.message);
-    });
+    if (db) {
+      addDoc(collection(db, "inquiries"), {
+        ...payload,
+        createdAt: new Date().toISOString()
+      }).catch(fireErr => {
+        console.warn("Could not sync with Firebase Firestore:", fireErr.message);
+      });
+    }
 
     bookingForm.reset();
     selectedItems.clear();
