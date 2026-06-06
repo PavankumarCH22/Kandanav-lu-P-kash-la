@@ -1,0 +1,122 @@
+[
+  {
+    "category": "Welcome Drinks",
+    "note": "Cool drinks for guest arrival",
+    "items": ["Panakam", "Buttermilk", "Lemon Juice", "Rose Milk", "Mango Juice", "Badam Milk"]
+  },
+  {
+    "category": "Tiffins",
+    "note": "Morning breakfast and tiffin items",
+    "items": [
+      "Dosa",
+      "Pesarattu",
+      "Uttapam",
+      "Idly",
+      "Upma",
+      "Pongali",
+      "Uggani Bajji",
+      "Mysore Bonda",
+      "Punugulu",
+      "Poori"
+    ]
+  },
+  {
+    "category": "Chutney, Curry & Podis",
+    "note": "Delicious sides, gravies, and spice powders",
+    "items": [
+      "Ginger Chutney (అల్లం పచ్చడి)",
+      "Peanut Chutney (పల్లీ చట్నీ)",
+      "Coconut Chutney (కొబ్బరి చట్నీ)",
+      "Tomato Green Chilli Pachadi (టమాటో పచ్చిమిర్చి పచ్చడి)",
+      "Aloo Kurma (ఆలూ కుర్మా)",
+      "Garlic Karam Podi (వెల్లుల్లి కారం)",
+      "Curry Leaves Karam Podi (కరివేపాకు కారం)"
+    ]
+  },
+  {
+    "category": "Rice Items",
+    "note": "Main rice dishes for Andhra meals",
+    "items": [
+      "White Rice",
+      "Bagara Rice",
+      "Pulihora",
+      "Chitranna",
+      "Veg Pulao",
+      "Veg Biryani",
+      "Non-Veg Biryani",
+      "Veg Gongura Rice",
+      "Non-Veg Gongura Rice",
+      "Tomato Rice",
+      "Jeera Rice",
+      "Gobi Rice",
+      "Egg Rice",
+      "Tamarind Rice"
+    ]
+  },
+  {
+    "category": "Rotis",
+    "note": "Soft breads and millet rotis",
+    "items": [
+      "Chapati",
+      "Jonna Rotte (Jowar Roti)",
+      "Sodda Rotte (Bajra Roti)",
+      "Poori",
+      "Rumali Roti"
+    ]
+  },
+  {
+    "category": "Curries",
+    "note": "Veg and non-veg curries",
+    "items": [
+      "Tomato Curry",
+      "Aloo Curry",
+      "Mixed Veg Curry",
+      "Cabbage Curry",
+      "Dondakaya Curry (Ivy Gourd)",
+      "Beerakaya Curry (Ridge Gourd)",
+      "Paneer Butter Masala",
+      "Paneer Curry",
+      "Mushroom Curry",
+      "Bendakaya Curry (Okra)",
+      "Egg Curry",
+      "Chicken Curry",
+      "Mutton Curry",
+      "Fish Pulusu",
+      "Cauliflower Curry",
+      "Munakkaya Curry (Drumstick)",
+      "Chickpea Curry"
+    ]
+  },
+  {
+    "category": "Fry Items",
+    "note": "Crispy and spicy fry dishes",
+    "items": [
+      "Aloo Fry",
+      "Bendakaya Fry (Okra Fry)",
+      "Dondakaya Fry (Ivy Gourd Fry)",
+      "Carrot Fry",
+      "Mixed Veg Fry",
+      "Gobi Dry",
+      "Chicken Pakodi",
+      "Mushroom Fry",
+      "Chilli Chicken",
+      "Fish Fry",
+      "Mutton Fry"
+    ]
+  },
+  {
+    "category": "Dal & Sambar",
+    "note": "Daily comfort gravies",
+    "items": ["Pappu", "Tomato Pappu", "Spinach Dal", "Sambar", "Rasam"]
+  },
+  {
+    "category": "Sweets",
+    "note": "Function sweets and desserts",
+    "items": ["Double Ka Meetha", "Gulab Jamun", "Poornalu", "Ariselu", "Bobbatlu", "Payasam", "Rasmalai", "Ice Cream"]
+  },
+  {
+    "category": "Traditional Village Special Items",
+    "note": "Kurnool-style country specials",
+    "items": ["Ragi Sangati", "Naatu Kodi Pulusu", "Ulavacharu", "Fresh Curd", "Clay Pot Cooking", "Wood Fire Chicken", "Country Style Mutton Curry"]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Andhra Banana Leaf Meal",
+    "people": "Famous combination",
+    "combo": "White Rice + Pappu + Sambar + Rasam + Avakaya + Curd",
+    "details": "A traditional Andhra serving for family functions, pooja meals, and lunch gatherings."
+  },
+  {
+    "name": "Rayalaseema Country Combo",
+    "people": "Famous combination",
+    "combo": "Ragi Sangati + Naatu Kodi Pulusu + Fresh Curd",
+    "details": "A strong Kurnool-style village meal with country chicken and cooling curd."
+  },
+  {
+    "name": "Veg Function Combo",
+    "people": "Famous combination",
+    "combo": "Bagara Rice + Gutti Vankaya + Tomato Pappu + Payasam",
+    "details": "A balanced vegetarian function plate with rich curry, dal, rice, and sweet."
+  },
+  {
+    "name": "Non-Veg Function Combo",
+    "people": "Famous combination",
+    "combo": "Biryani + Chicken Curry + Mutton Fry + Rasmalai",
+    "details": "A festive non-veg spread for larger guest gatherings and celebrations."
+  },
+  {
+    "name": "Starter Counter Combo",
+    "people": "Famous combination",
+    "combo": "Mirchi Bajji + Punugulu + Chicken 65 + Fish Fry",
+    "details": "Hot starter service for evening events, receptions, and live counters."
+  },
+  {
+    "name": "Sweet Ending Combo",
+    "people": "Famous combination",
+    "combo": "Double Ka Meetha + Poornalu + Bobbatlu + Ice Cream",
+    "details": "A rich dessert finish with Andhra sweets and chilled ice cream."
+  }
+]

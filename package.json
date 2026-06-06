@@ -16,5 +16,8 @@
     "backend"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^12.14.0"
+  }
 }

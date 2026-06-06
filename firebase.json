@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/menu",
+        "destination": "/api/menu.json"
+      },
+      {
+        "source": "/api/packages",
+        "destination": "/api/packages.json"
+      },
+      {
+        "source": "/api/serving-styles",
+        "destination": "/api/serving-styles.json"
+      },
+      {
+        "source": "/api/functions",
+        "destination": "/api/functions.json"
+      },
+      {
+        "source": "/api/testimonials",
+        "destination": "/api/testimonials.json"
+      }
+    ]
+  }
+}

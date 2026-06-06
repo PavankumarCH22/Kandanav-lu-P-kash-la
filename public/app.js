@@ -1048,6 +1048,24 @@ bookingForm.addEventListener("submit", async event => {
     }
   }
 
+  const isFirebaseHosting = window.location.hostname.endsWith("web.app") || window.location.hostname.endsWith("firebaseapp.com");
+  if (isFirebaseHosting) {
+    try {
+      await addDoc(collection(db, "inquiries"), {
+        ...payload,
+        createdAt: new Date().toISOString()
+      });
+      bookingForm.reset();
+      selectedItems.clear();
+      updateSelectedItemsUI();
+      const randomRef = "KP-" + Math.floor(100000 + Math.random() * 900000);
+      formStatus.textContent = "Inquiry sent successfully! Reference: " + randomRef;
+    } catch (fireErr) {
+      formStatus.textContent = "Error saving: " + fireErr.message;
+    }
+    return;
+  }
+
   try {
     const response = await fetch("/api/inquiries", {
       method: "POST",
