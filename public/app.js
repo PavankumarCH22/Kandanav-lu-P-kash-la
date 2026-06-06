@@ -1031,6 +1031,25 @@ if (clearSelectedBtn) {
   });
 }
 
+function timeoutPromise(ms, promise) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error("Firebase write timed out (check your Firestore rules)"));
+    }, ms);
+
+    promise.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (err) => {
+        clearTimeout(timer);
+        reject(err);
+      }
+    );
+  });
+}
+
 bookingForm.addEventListener("submit", async event => {
   event.preventDefault();
   formStatus.textContent = t("status.loading");
@@ -1051,17 +1070,19 @@ bookingForm.addEventListener("submit", async event => {
   const isFirebaseHosting = window.location.hostname.endsWith("web.app") || window.location.hostname.endsWith("firebaseapp.com");
   if (isFirebaseHosting) {
     try {
-      await addDoc(collection(db, "inquiries"), {
+      const docRefPromise = addDoc(collection(db, "inquiries"), {
         ...payload,
         createdAt: new Date().toISOString()
       });
+      await timeoutPromise(4000, docRefPromise);
+      
       bookingForm.reset();
       selectedItems.clear();
       updateSelectedItemsUI();
       const randomRef = "KP-" + Math.floor(100000 + Math.random() * 900000);
       formStatus.textContent = "Inquiry sent successfully! Reference: " + randomRef;
     } catch (fireErr) {
-      formStatus.textContent = "Error saving: " + fireErr.message;
+      formStatus.textContent = "Error: " + fireErr.message;
     }
     return;
   }
@@ -1081,15 +1102,13 @@ bookingForm.addEventListener("submit", async event => {
       return;
     }
 
-    // Try saving to Firebase Firestore as well
-    try {
-      await addDoc(collection(db, "inquiries"), {
-        ...payload,
-        createdAt: new Date().toISOString()
-      });
-    } catch (fireErr) {
+    // Try saving to Firebase Firestore in the background (do not block the UI)
+    addDoc(collection(db, "inquiries"), {
+      ...payload,
+      createdAt: new Date().toISOString()
+    }).catch(fireErr => {
       console.warn("Could not sync with Firebase Firestore:", fireErr.message);
-    }
+    });
 
     bookingForm.reset();
     selectedItems.clear();
